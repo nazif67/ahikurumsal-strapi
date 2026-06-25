@@ -1,0 +1,521 @@
+{
+  "key": "plugin_content_manager_configuration_content_types::api::job-listing.job-listing",
+  "value": {
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "title",
+      "defaultSortBy": "title",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "title": {
+        "edit": {
+          "label": "title",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "title",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "profession": {
+        "edit": {
+          "label": "profession",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "key"
+        },
+        "list": {
+          "label": "profession",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "city": {
+        "edit": {
+          "label": "city",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "city",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "district": {
+        "edit": {
+          "label": "district",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "district",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "department": {
+        "edit": {
+          "label": "department",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "key"
+        },
+        "list": {
+          "label": "department",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "work_mode": {
+        "edit": {
+          "label": "work_mode",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "key"
+        },
+        "list": {
+          "label": "work_mode",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "position": {
+        "edit": {
+          "label": "position",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "key"
+        },
+        "list": {
+          "label": "position",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "employmentType": {
+        "edit": {
+          "label": "employmentType",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "employmentType",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "disabilityFriendly": {
+        "edit": {
+          "label": "disabilityFriendly",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "disabilityFriendly",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "minAge": {
+        "edit": {
+          "label": "minAge",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "minAge",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "maxAge": {
+        "edit": {
+          "label": "maxAge",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "maxAge",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "educationRequirement": {
+        "edit": {
+          "label": "educationRequirement",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "educationRequirement",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "publicationEndDate": {
+        "edit": {
+          "label": "publicationEndDate",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "publicationEndDate",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "jobStatus": {
+        "edit": {
+          "label": "jobStatus",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "jobStatus",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "company": {
+        "edit": {
+          "label": "company",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "companyName"
+        },
+        "list": {
+          "label": "company",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "applicationCount": {
+        "edit": {
+          "label": "applicationCount",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "applicationCount",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "gender": {
+        "edit": {
+          "label": "gender",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "gender",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "contactEmail": {
+        "edit": {
+          "label": "contactEmail",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "contactEmail",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "contactPhone": {
+        "edit": {
+          "label": "contactPhone",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "contactPhone",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "description": {
+        "edit": {
+          "label": "description",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "description",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "requiredQualifications": {
+        "edit": {
+          "label": "requiredQualifications",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "requiredQualifications",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "jobNature": {
+        "edit": {
+          "label": "jobNature",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "jobNature",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "createdAt": {
+        "edit": {
+          "label": "createdAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "createdAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedAt": {
+        "edit": {
+          "label": "updatedAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "updatedAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdBy": {
+        "edit": {
+          "label": "createdBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "createdBy",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedBy": {
+        "edit": {
+          "label": "updatedBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "updatedBy",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "title",
+        "profession",
+        "city"
+      ],
+      "edit": [
+        [
+          {
+            "name": "title",
+            "size": 6
+          },
+          {
+            "name": "profession",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "city",
+            "size": 6
+          },
+          {
+            "name": "district",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "department",
+            "size": 6
+          },
+          {
+            "name": "work_mode",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "position",
+            "size": 6
+          },
+          {
+            "name": "employmentType",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "disabilityFriendly",
+            "size": 4
+          },
+          {
+            "name": "minAge",
+            "size": 4
+          },
+          {
+            "name": "maxAge",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "educationRequirement",
+            "size": 6
+          },
+          {
+            "name": "publicationEndDate",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "jobStatus",
+            "size": 6
+          },
+          {
+            "name": "company",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "applicationCount",
+            "size": 4
+          },
+          {
+            "name": "gender",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "contactEmail",
+            "size": 6
+          },
+          {
+            "name": "contactPhone",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "description",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "requiredQualifications",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "jobNature",
+            "size": 12
+          }
+        ]
+      ]
+    },
+    "uid": "api::job-listing.job-listing"
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

@@ -1,0 +1,45 @@
+{
+  "kind": "singleType",
+  "collectionName": "hakkimdas",
+  "info": {
+    "singularName": "hakkimda",
+    "pluralName": "hakkimdas",
+    "displayName": "Hakkımda",
+    "description": "Kişisel profil bilgileri"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ad": {
+      "type": "string"
+    },
+    "unvan": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "richtext"
+    },
+    "foto": {
+      "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": false
+    },
+    "email": {
+      "type": "email"
+    },
+    "telefon": {
+      "type": "string"
+    },
+    "linkedin": {
+      "type": "string"
+    },
+    "deneyimYili": {
+      "type": "integer"
+    },
+    "yetenekler": {
+      "type": "text"
+    }
+  }
+}

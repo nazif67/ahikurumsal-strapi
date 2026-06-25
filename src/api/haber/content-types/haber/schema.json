@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "habers",
+  "info": {
+    "singularName": "haber",
+    "pluralName": "haberler",
+    "displayName": "Pratik Bilgi",
+    "description": "İş hukuku, mevzuat ve çalışma hayatına dair pratik bilgiler"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "excerpt": {
+      "type": "text"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "date": {
+      "type": "date"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": ["Genel", "İş Hukuku", "Mevzuat", "SGK & Sigorta", "Ücret & Tazminat", "İşe Alım"],
+      "default": "Genel"
+    },
+    "coverImage": {
+      "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "key": "plugin_content_manager_configuration_content_types::api::posting-right.posting-right",
+  "value": {
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "id",
+      "defaultSortBy": "id",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "company": {
+        "edit": {
+          "label": "company",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "companyName"
+        },
+        "list": {
+          "label": "company",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "postingQuota": {
+        "edit": {
+          "label": "postingQuota",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "postingQuota",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "postingsUsed": {
+        "edit": {
+          "label": "postingsUsed",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "postingsUsed",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "activePostings": {
+        "edit": {
+          "label": "activePostings",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "activePostings",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "totalApplicationCount": {
+        "edit": {
+          "label": "totalApplicationCount",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "totalApplicationCount",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdAt": {
+        "edit": {
+          "label": "createdAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "createdAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedAt": {
+        "edit": {
+          "label": "updatedAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "updatedAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdBy": {
+        "edit": {
+          "label": "createdBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "createdBy",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedBy": {
+        "edit": {
+          "label": "updatedBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "updatedBy",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "company",
+        "postingQuota",
+        "postingsUsed"
+      ],
+      "edit": [
+        [
+          {
+            "name": "company",
+            "size": 6
+          },
+          {
+            "name": "postingQuota",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "postingsUsed",
+            "size": 4
+          },
+          {
+            "name": "activePostings",
+            "size": 4
+          },
+          {
+            "name": "totalApplicationCount",
+            "size": 4
+          }
+        ]
+      ]
+    },
+    "uid": "api::posting-right.posting-right"
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

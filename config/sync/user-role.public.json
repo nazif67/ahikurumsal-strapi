@@ -1,0 +1,119 @@
+{
+  "documentId": "wuqwafb5x2ll4tcqivaeiza8",
+  "name": "Public",
+  "description": "Public default role",
+  "type": "public",
+  "locale": null,
+  "permissions": [
+    {
+      "documentId": "v3scl5fc8ltham7h4cx8u06v",
+      "action": "api::about-page.about-page.find",
+      "locale": null
+    },
+    {
+      "documentId": "mz4bork48cbxqm1v3cpmohen",
+      "action": "api::application-log.application-log.create",
+      "locale": null
+    },
+    {
+      "documentId": "unc8vmu8updjk88pippgz2as",
+      "action": "api::blog-post.blog-post.find",
+      "locale": null
+    },
+    {
+      "documentId": "h7e12oeasq5t496nw49m5h04",
+      "action": "api::blog-post.blog-post.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "gqde5rtvoj7r81ka1pdxptp6",
+      "action": "api::company-profile.company-profile.find",
+      "locale": null
+    },
+    {
+      "documentId": "ci612hul8b4l508bhezn2soy",
+      "action": "api::company-profile.company-profile.public",
+      "locale": null
+    },
+    {
+      "documentId": "myalhe6ddq0t58bbjofefrjx",
+      "action": "api::contact.contact.find",
+      "locale": null
+    },
+    {
+      "documentId": "unqdjdr8nndh7sm9ytfut8vk",
+      "action": "api::department.department.find",
+      "locale": null
+    },
+    {
+      "documentId": "ojsjbkbh19g039r10igvki6d",
+      "action": "api::job-listing.job-listing.find",
+      "locale": null
+    },
+    {
+      "documentId": "l58a23x65wova8ywch3662gx",
+      "action": "api::position.position.find",
+      "locale": null
+    },
+    {
+      "documentId": "i8j7m37pdvatmacl70mx4hv8",
+      "action": "api::service.service.find",
+      "locale": null
+    },
+    {
+      "documentId": "fk14ff2azt4micmy1bqj21ck",
+      "action": "api::service.service.findBySlug",
+      "locale": null
+    },
+    {
+      "documentId": "zutg140a8i3xc99s8ciewhmm",
+      "action": "api::service.service.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "lp02ak7mgyo20dq0nlb6jljw",
+      "action": "api::work-mode.work-mode.find",
+      "locale": null
+    },
+    {
+      "documentId": "v2h6ix82d4ra9af7dr8md2wn",
+      "action": "plugin::users-permissions.auth.callback",
+      "locale": null
+    },
+    {
+      "documentId": "e5qrmm88cq8ulsju3wp6h7pd",
+      "action": "plugin::users-permissions.auth.changePassword",
+      "locale": null
+    },
+    {
+      "documentId": "mhcaziiyprly5vihb3sted9z",
+      "action": "plugin::users-permissions.auth.connect",
+      "locale": null
+    },
+    {
+      "documentId": "uoqyrtm9kgsanlxzay81b0b4",
+      "action": "plugin::users-permissions.auth.emailConfirmation",
+      "locale": null
+    },
+    {
+      "documentId": "p0ri66vihh6qnhas9ocnbxgh",
+      "action": "plugin::users-permissions.auth.forgotPassword",
+      "locale": null
+    },
+    {
+      "documentId": "qabbvf99ltizc8pjaeruawtm",
+      "action": "plugin::users-permissions.auth.register",
+      "locale": null
+    },
+    {
+      "documentId": "felsr93f1qpyedhs81lf7jwv",
+      "action": "plugin::users-permissions.auth.resetPassword",
+      "locale": null
+    },
+    {
+      "documentId": "myu5qnkx3appiywbrtylraog",
+      "action": "plugin::users-permissions.auth.sendEmailConfirmation",
+      "locale": null
+    }
+  ]
+}
