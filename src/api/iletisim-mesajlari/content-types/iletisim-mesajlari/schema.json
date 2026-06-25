@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "iletisim_mesajlaris",
+  "info": {
+    "singularName": "iletisim-mesajlari",
+    "pluralName": "iletisim-mesajlaris",
+    "displayName": "İletişim Mesajları"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ad": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "konu": {
+      "type": "string",
+      "required": true
+    },
+    "mesaj": {
+      "type": "text",
+      "required": true
+    }
+  }
+}
