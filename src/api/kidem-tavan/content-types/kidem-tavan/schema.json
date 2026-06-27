@@ -1,0 +1,23 @@
+{
+  "kind": "singleType",
+  "collectionName": "kidem_tavan",
+  "info": {
+    "singularName": "kidem-tavan",
+    "pluralName": "kidem-tavans",
+    "displayName": "Kıdem Tazminatı Tavanı",
+    "description": "Güncel kıdem tazminatı tavan tutarı"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tutar": {
+      "type": "decimal",
+      "required": true
+    },
+    "gecerlilik_tarihi": {
+      "type": "date"
+    }
+  }
+}
