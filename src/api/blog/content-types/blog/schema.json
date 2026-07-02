@@ -37,6 +37,11 @@
       "allowedTypes": ["images"],
       "type": "media",
       "multiple": false
+    },
+    "views": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
     }
   }
 }

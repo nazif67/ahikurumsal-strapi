@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "yorumlar",
+  "info": {
+    "singularName": "yorum",
+    "pluralName": "yorumlar",
+    "displayName": "Yorumlar",
+    "description": "Haberler için kullanıcı yorumları"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "author": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "text",
+      "required": true
+    },
+    "approved": {
+      "type": "boolean",
+      "default": false
+    },
+    "haber": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::haber.haber",
+      "inversedBy": "yorumlar"
+    }
+  }
+}
