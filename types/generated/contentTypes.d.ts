@@ -636,6 +636,69 @@ export interface ApiIletisimMesajlariIletisimMesajlari
   };
 }
 
+export interface ApiKidemTavanKidemTavan extends Struct.SingleTypeSchema {
+  collectionName: 'kidem_tavan';
+  info: {
+    description: 'G\u00FCncel k\u0131dem tazminat\u0131 tavan tutar\u0131';
+    displayName: 'K\u0131dem Tazminat\u0131 Tavan\u0131';
+    pluralName: 'kidem-tavans';
+    singularName: 'kidem-tavan';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    gecerlilik_tarihi: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::kidem-tavan.kidem-tavan'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    tutar: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSablonSablon extends Struct.CollectionTypeSchema {
+  collectionName: 'sablonlar';
+  info: {
+    description: '\u0130ndirilebilir haz\u0131r form ve \u015Fablonlar';
+    displayName: 'Haz\u0131r \u015Eablon';
+    pluralName: 'sablonlar';
+    singularName: 'sablon';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    file: Schema.Attribute.Media<'files' | 'images'> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sablon.sablon'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiYorumYorum extends Struct.CollectionTypeSchema {
   collectionName: 'yorumlar';
   info: {
@@ -1182,6 +1245,8 @@ declare module '@strapi/strapi' {
       'api::haber.haber': ApiHaberHaber;
       'api::hakkimda.hakkimda': ApiHakkimdaHakkimda;
       'api::iletisim-mesajlari.iletisim-mesajlari': ApiIletisimMesajlariIletisimMesajlari;
+      'api::kidem-tavan.kidem-tavan': ApiKidemTavanKidemTavan;
+      'api::sablon.sablon': ApiSablonSablon;
       'api::yorum.yorum': ApiYorumYorum;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

@@ -7,7 +7,7 @@ module.exports = createCoreController('api::haber.haber', ({ strapi }) => ({
     const { slug } = ctx.params;
     const [entry] = await strapi.db
       .query('api::haber.haber')
-      .findMany({ where: { slug }, limit: 1 });
+      .findMany({ where: { slug, publishedAt: { $notNull: true } }, limit: 1 });
 
     if (!entry) return ctx.notFound();
 
