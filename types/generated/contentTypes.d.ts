@@ -459,6 +459,14 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    views: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
   };
 }
 
@@ -466,7 +474,7 @@ export interface ApiDuyuruDuyuru extends Struct.CollectionTypeSchema {
   collectionName: 'duyurular';
   info: {
     description: 'Duyurular ve bildirimler';
-    displayName: 'Pratik Bilgiler';
+    displayName: 'Duyurular';
     pluralName: 'duyurular';
     singularName: 'duyuru';
   };
@@ -483,6 +491,7 @@ export interface ApiDuyuruDuyuru extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     date: Schema.Attribute.Date;
+    excerpt: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -491,18 +500,27 @@ export interface ApiDuyuruDuyuru extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     pinned: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    views: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
   };
 }
 
 export interface ApiHaberHaber extends Struct.CollectionTypeSchema {
   collectionName: 'habers';
   info: {
-    description: '\u0130\u015F hukuku, mevzuat ve \u00E7al\u0131\u015Fma hayat\u0131na dair pratik bilgiler';
-    displayName: 'Pratik Bilgi';
+    description: '\u0130\u015F hukuku, mevzuat ve \u0130K d\u00FCnyas\u0131ndan haberler';
+    displayName: 'Haber';
     pluralName: 'haberler';
     singularName: 'haber';
   };
@@ -537,6 +555,15 @@ export interface ApiHaberHaber extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    views: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    yorumlar: Schema.Attribute.Relation<'oneToMany', 'api::yorum.yorum'>;
   };
 }
 
@@ -574,6 +601,130 @@ export interface ApiHakkimdaHakkimda extends Struct.SingleTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     yetenekler: Schema.Attribute.Text;
+  };
+}
+
+export interface ApiIletisimMesajlariIletisimMesajlari
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'iletisim_mesajlaris';
+  info: {
+    displayName: '\u0130leti\u015Fim Mesajlar\u0131';
+    pluralName: 'iletisim-mesajlaris';
+    singularName: 'iletisim-mesajlari';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    ad: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    konu: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::iletisim-mesajlari.iletisim-mesajlari'
+    > &
+      Schema.Attribute.Private;
+    mesaj: Schema.Attribute.Text & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiKidemTavanKidemTavan extends Struct.SingleTypeSchema {
+  collectionName: 'kidem_tavan';
+  info: {
+    description: 'G\u00FCncel k\u0131dem tazminat\u0131 tavan tutar\u0131';
+    displayName: 'K\u0131dem Tazminat\u0131 Tavan\u0131';
+    pluralName: 'kidem-tavans';
+    singularName: 'kidem-tavan';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    gecerlilik_tarihi: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::kidem-tavan.kidem-tavan'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    tutar: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSablonSablon extends Struct.CollectionTypeSchema {
+  collectionName: 'sablonlar';
+  info: {
+    description: '\u0130ndirilebilir haz\u0131r form ve \u015Fablonlar';
+    displayName: 'Haz\u0131r \u015Eablon';
+    pluralName: 'sablonlar';
+    singularName: 'sablon';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    file: Schema.Attribute.Media<'files' | 'images'> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sablon.sablon'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiYorumYorum extends Struct.CollectionTypeSchema {
+  collectionName: 'yorumlar';
+  info: {
+    description: 'Haberler i\u00E7in kullan\u0131c\u0131 yorumlar\u0131';
+    displayName: 'Yorumlar';
+    pluralName: 'yorumlar';
+    singularName: 'yorum';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    approved: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    author: Schema.Attribute.String & Schema.Attribute.Required;
+    content: Schema.Attribute.Text & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    haber: Schema.Attribute.Relation<'manyToOne', 'api::haber.haber'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::yorum.yorum'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1093,6 +1244,10 @@ declare module '@strapi/strapi' {
       'api::duyuru.duyuru': ApiDuyuruDuyuru;
       'api::haber.haber': ApiHaberHaber;
       'api::hakkimda.hakkimda': ApiHakkimdaHakkimda;
+      'api::iletisim-mesajlari.iletisim-mesajlari': ApiIletisimMesajlariIletisimMesajlari;
+      'api::kidem-tavan.kidem-tavan': ApiKidemTavanKidemTavan;
+      'api::sablon.sablon': ApiSablonSablon;
+      'api::yorum.yorum': ApiYorumYorum;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

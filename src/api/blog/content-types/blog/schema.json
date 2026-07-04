@@ -38,6 +38,11 @@
       "type": "media",
       "multiple": false
     },
+    "views": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
     "author": {
       "type": "string"
     }

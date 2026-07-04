@@ -25,6 +25,9 @@
       "type": "text",
       "required": true
     },
+    "excerpt": {
+      "type": "text"
+    },
     "date": {
       "type": "date"
     },
@@ -42,6 +45,11 @@
     "pinned": {
       "type": "boolean",
       "default": false
+    },
+    "views": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
     },
     "author": {
       "type": "string"

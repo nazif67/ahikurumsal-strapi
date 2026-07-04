@@ -4,8 +4,8 @@
   "info": {
     "singularName": "haber",
     "pluralName": "haberler",
-    "displayName": "Pratik Bilgi",
-    "description": "İş hukuku, mevzuat ve çalışma hayatına dair pratik bilgiler"
+    "displayName": "Haber",
+    "description": "İş hukuku, mevzuat ve İK dünyasından haberler"
   },
   "options": {
     "draftAndPublish": true
@@ -39,6 +39,17 @@
       "allowedTypes": ["images"],
       "type": "media",
       "multiple": false
+    },
+    "views": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "yorumlar": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::yorum.yorum",
+      "mappedBy": "haber"
     },
     "author": {
       "type": "string"
