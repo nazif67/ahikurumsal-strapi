@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sss_items",
+  "info": {
+    "singularName": "sss",
+    "pluralName": "sss-items",
+    "displayName": "SSS - Sıkça Sorulan Sorular",
+    "description": "Sıkça sorulan sorular ve cevapları"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "question": {
+      "type": "string",
+      "required": true
+    },
+    "answer": {
+      "type": "text",
+      "required": true
+    },
+    "category": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
