@@ -37,6 +37,9 @@
       "allowedTypes": ["images"],
       "type": "media",
       "multiple": false
+    },
+    "author": {
+      "type": "string"
     }
   }
 }

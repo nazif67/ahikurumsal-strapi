@@ -42,6 +42,9 @@
     "pinned": {
       "type": "boolean",
       "default": false
+    },
+    "author": {
+      "type": "string"
     }
   }
 }
