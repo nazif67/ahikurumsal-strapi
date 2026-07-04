@@ -293,15 +293,20 @@ const SSS_DATA = [
 ];
 
 async function seedSSSData({ strapi }) {
-  const count = await strapi.db.query('api::sss.sss').count();
-  if (count > 0) return;
+  try {
+    const count = await strapi.entityService.count('api::sss.sss');
+    strapi.log.info(`SSS seed: tabloda ${count} kayıt var.`);
+    if (count > 0) return;
 
-  for (const item of SSS_DATA) {
-    await strapi.db.query('api::sss.sss').create({
-      data: { ...item, publishedAt: new Date() },
-    });
+    for (const item of SSS_DATA) {
+      await strapi.entityService.create('api::sss.sss', {
+        data: { ...item, publishedAt: new Date() },
+      });
+    }
+    strapi.log.info(`SSS seed: ${SSS_DATA.length} soru eklendi.`);
+  } catch (err) {
+    strapi.log.error(`SSS seed hatası: ${err.message}`);
   }
-  strapi.log.info(`SSS: ${SSS_DATA.length} soru başarıyla eklendi.`);
 }
 
 module.exports = {
