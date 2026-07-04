@@ -290,20 +290,180 @@ const SSS_DATA = [
     question: 'Çalışma izninin iptali veya sona erdirilmesi nasıl yapılır?',
     answer: 'İşverenler, e-İzin sistemi üzerinden "İzin Sonrası İşlemler → İzin İptal Talebi" adımlarını takip ederek elektronik imzayla iptal talebinde bulunabilir.',
   },
+
+  // ─── Çalışan ve İşveren ───────────────────────────────────────────────────
+  {
+    category: 'Çalışan ve İşveren', order: 35,
+    question: 'SGK işe giriş bildirimi ne zaman yapılmalıdır?',
+    answer: '5510 sayılı Kanun\'un 8. maddesi uyarınca işveren, sigortalıyı işe başlamadan en geç bir gün önce e-Bildirge sistemi üzerinden SGK\'ya bildirmek zorundadır. İnşaat, tarım ve balıkçılık gibi sektörlerde işe başlama gününde bildirim yapılması kabul edilebilir. Süresinde yapılmayan bildirimler idari para cezasına yol açar.',
+  },
+  {
+    category: 'Çalışan ve İşveren', order: 36,
+    question: 'SGK prim oranları nelerdir?',
+    answer: '5510 sayılı Kanun kapsamında SSK (4/a) sigortalıları için prim oranları şöyledir:\n\n• Uzun vadeli sigorta (malullük, yaşlılık, ölüm): İşçi %9, İşveren %11 (Toplam %20)\n• Kısa vadeli sigorta (iş kazası, meslek hastalığı): Yalnızca işveren (%1–6,5; risk grubuna göre değişir, standart %2)\n• Genel sağlık sigortası (GSS): İşçi %5, İşveren %7,5 (Toplam %12,5)\n• İşsizlik sigortası: İşçi %1, İşveren %2, Devlet %1\n\nNet olarak çalışanın maaşından kesilen SGK+işsizlik payı %15, işveren maliyeti ise %22,5\'tir.',
+  },
+  {
+    category: 'Çalışan ve İşveren', order: 37,
+    question: 'Aylık prim bildirgesi (APB) ne zamana kadar verilmelidir?',
+    answer: 'SSK (4/a) kapsamındaki işyerleri için Aylık Prim ve Hizmet Belgesi, ilgili ayı takip eden ayın 23\'üne kadar e-Bildirge sistemi üzerinden SGK\'ya gönderilmelidir. Primlerin ödeme son tarihi ise aynı ayın 26\'sıdır. Süresinde verilmeyen bildirge için idari para cezası uygulanır.',
+  },
+  {
+    category: 'Çalışan ve İşveren', order: 38,
+    question: 'Prime esas kazanç alt ve üst sınırı nedir?',
+    answer: 'SGK primlerinin hesaplanacağı ücret; alt sınır olarak aylık asgari ücret, üst sınır olarak ise aylık asgari ücretin 7,5 katı ile sınırlandırılmıştır. Bu eşiğin altında ücret bildirilmesi mümkün değildir; üst sınırı aşan kazanç kısmı prime tabi tutulmaz. Alt ve üst sınır değerleri asgari ücret artışlarıyla birlikte her yıl güncellenir.',
+  },
+  {
+    category: 'Çalışan ve İşveren', order: 39,
+    question: 'Eksik gün bildirimi ne zaman ve nasıl yapılır?',
+    answer: 'Bir ayda 30 günden az çalışılan durumlarda (ücretsiz izin, istirahat, devamsızlık vb.) Aylık Prim ve Hizmet Belgesi\'nin yanı sıra Eksik Gün Bildirim Formu ve destekleyici belgelerin de SGK\'ya sunulması gerekir. Form, ilgili ayın belgesinin verilme süresiyle aynı tarihe kadar teslim edilmelidir.',
+  },
+  {
+    category: 'Çalışan ve İşveren', order: 40,
+    question: 'İşten ayrılan çalışan için SGK işten ayrılış bildirimi nasıl yapılır?',
+    answer: 'İşveren, çalışanın iş sözleşmesinin sona ermesinden itibaren 10 gün içinde e-Bildirge sistemi üzerinden "İşten Ayrılış Bildirgesini" doldurmak zorundadır. Bildirgede işten ayrılış nedeninin doğru kodla (ör. 01=İstifa, 29=İşveren feshi) seçilmesi önemlidir; bu bilgi çalışanın işsizlik ödeneği hakkını doğrudan etkiler.',
+  },
+  {
+    category: 'Çalışan ve İşveren', order: 41,
+    question: 'İşsizlik ödeneğinden kimler ve ne kadar süre yararlanabilir?',
+    answer: '4447 sayılı Kanun kapsamında işsizlik ödeneğinden yararlanabilmek için son 3 yılda en az 600 prim ödeme günü bulunması ve son 120 gün kesintisiz sigortalı çalışılmış olması gerekmektedir.\n\nÖdenek süresi prim ödeme gününe göre belirlenir:\n• 600–1199 gün: 180 gün (6 ay)\n• 1200–1799 gün: 270 gün (9 ay)\n• 1800 gün ve üzeri: 360 gün (12 ay)\n\nÖdenek miktarı, son 4 aylık brüt ücretin aylık ortalamasının %40\'ı kadardır; ancak aylık asgari ücretin %80\'ini geçemez.',
+  },
+  {
+    category: 'Çalışan ve İşveren', order: 42,
+    question: 'SGK e-Bildirge sistemi nedir ve nasıl kullanılır?',
+    answer: 'e-Bildirge (ebildirge.sgk.gov.tr), işverenlerin tüm SGK yükümlülüklerini elektronik ortamda yerine getirebildiği resmi sistemdir. İşe giriş/çıkış bildirgesi, aylık prim belgesi, eksik gün bildirimi ve e-İdare işlemleri bu platform üzerinden yürütülür. Sisteme erişim için işyeri sicil numarası ve şifresi gerekmektedir.',
+  },
+  {
+    category: 'Çalışan ve İşveren', order: 43,
+    question: 'Stajyer öğrenciler SGK\'ya bildirilmeli midir?',
+    answer: 'Evet. Zorunlu staj yapan öğrenciler, 5510 sayılı Kanun\'un 5. maddesi kapsamında "kısmen sigortalı" sayılır ve kısa vadeli sigorta kolları (iş kazası ve meslek hastalığı) ile genel sağlık sigortası kapsamında SGK\'ya bildirilmesi zorunludur. Söz konusu primler öğretim kurumu tarafından ödenir. Gönüllü (zorunlu olmayan) stajyerlerin bildirimi ise ayrı kurallara tabidir.',
+  },
+  {
+    category: 'Çalışan ve İşveren', order: 44,
+    question: 'SGK prim teşvikleri neler var?',
+    answer: 'SGK, belirli gruplara yönelik işveren yükünü azaltan çeşitli prim teşvikleri sunmaktadır. Başlıca teşvikler şunlardır:\n\n• 5 puanlık Hazine desteği (4/a kapsamındaki tüm işverenler için işveren payında indirim)\n• Genç, kadın ve engelli istihdamına yönelik teşvikler\n• İşkur yönlendirmeli işe alımlarda ek destekler\n• Ar-Ge ve tasarım personeline yönelik gelir vergisi ve sigorta prim desteği\n\nHangi teşvikten yararlanılabileceği işyeri türüne, çalışan profiline ve istihdamın niteliğine göre değişir.',
+  },
+  {
+    category: 'Çalışan ve İşveren', order: 45,
+    question: 'SGK borcu olan işveren ihalelerden men edilir mi?',
+    answer: 'Evet. 5510 sayılı Kanun gereğince kamu kurumları, ihaleye girecek işverenlerden SGK borcu bulunmadığına dair "SGK borcu yoktur yazısı" talep edebilir. Prim borcu olan işverenler kamu ihalelerine katılamaz, çeşitli devlet desteklerinden yararlanamaz ve hibe başvurularında sorunla karşılaşabilir.',
+  },
+
+  // ─── Emeklilik ────────────────────────────────────────────────────────────
+  {
+    category: 'Emeklilik', order: 46,
+    question: 'Emeklilik için gerekli koşullar nelerdir?',
+    answer: '5510 sayılı Kanun kapsamında yaşlılık aylığı bağlanabilmesi için yaş, prim gün sayısı ve sigortalılık süresi koşullarının birlikte sağlanması gerekir. Koşullar, sigortalılığa ilk giriş tarihine ve doğum yılına göre farklılık gösterir:\n\n• 1/1/2000 öncesi sigortalılık başlangıcı olanlar için geçiş hükümleri uygulanır.\n• 1/1/2000 ve sonrası ilk defa sigortalı olanlar için 65 yaş ve 7.200 prim günü koşulu aranır.\n\nKesin koşullarınızı öğrenmek için uygulandığınız kanun metnine veya SGK İl/İlçe Müdürlüklerine başvurmanız önerilir.',
+  },
+  {
+    category: 'Emeklilik', order: 47,
+    question: 'EYT (Emeklilikte Yaşa Takılanlar) düzenlemesi nedir?',
+    answer: '7438 sayılı Kanun 15 Mart 2023 tarihinde Resmî Gazete\'de yayımlanarak yürürlüğe girmiştir. Bu düzenlemeyle 8 Eylül 1999 tarihinden önce SGK\'ya (SSK/Bağ-Kur) ilk kez tescil yaptıran ve prim gün şartını karşılayan sigortalılar yaş şartı aranmaksızın emekliye ayrılabilmiştir. EYT kapsamında başvurabilecek kişiler büyük ölçüde bu hakkı kullanmış durumdadır.',
+  },
+  {
+    category: 'Emeklilik', order: 48,
+    question: 'Emeklilik başvurusu nereye ve nasıl yapılır?',
+    answer: 'Emeklilik başvurusu SGK\'nın dijital hizmet portalı olan "e-SGK" (eSGK.sgk.gov.tr) üzerinden veya herhangi bir SGK İl/İlçe Müdürlüğüne şahsen başvurularak yapılabilir. e-Devlet kapısı üzerinden başvuru seçeneği de sunulmaktadır. Başvurudan önce "Hizmet Dökümü"nün incelenmesi ve eksik primlerin tamamlanması tavsiye edilir.',
+  },
+  {
+    category: 'Emeklilik', order: 49,
+    question: 'Emeklilik maaşı nasıl hesaplanır?',
+    answer: 'SSK (4/a) kapsamındaki emeklilik aylığı; sigortalılık süresi, toplam prim günü ve prime esas kazanç ortalaması esas alınarak hesaplanır. Aylık bağlama oranı, her 360 günlük prim için belirli bir yüzde olarak eklenir. Güncelleme katsayısı (enflasyon) yılda iki kez uygulanarak maaşlar TÜFE ve ücret artışlarıyla revize edilir. Kesin hesaplama için SGK\'nın emeklilik simülatörünü (sgk.gov.tr) kullanabilirsiniz.',
+  },
+  {
+    category: 'Emeklilik', order: 50,
+    question: 'Emekli olduktan sonra çalışmaya devam edebilir miyim?',
+    answer: 'Evet. Emekli olduktan sonra çalışmak mümkündür; ancak SSK (4/a) kapsamında bir işte çalışanlardan Sosyal Güvenlik Destek Primi (SGDP) kesilir. 2024 itibarıyla SGDP oranı çalışan payı %7,5 ve işveren payı %22,5\'tir. Bu çalışma emekli aylığını kesmez; aylık ödenmeye devam eder.',
+  },
+  {
+    category: 'Emeklilik', order: 51,
+    question: 'Ölüm aylığı (dul ve yetim aylığı) nasıl bağlanır?',
+    answer: '5510 sayılı Kanun\'un 34. maddesi uyarınca vefat eden sigortalının; eşine, çocuklarına ve belirli koşulları taşıyan ebeveynlerine ölüm aylığı bağlanabilir. Hak sahipliği için vefat eden sigortalının en az 1800 prim günü olması ya da malullük veya yaşlılık aylığı almakta olması gerekir. Başvuru, ölüm tarihinden itibaren gecikmeden SGK\'ya yapılmalıdır.',
+  },
+  {
+    category: 'Emeklilik', order: 52,
+    question: 'Eksik prim günlerini isteğe bağlı sigorta ile tamamlayabilir miyim?',
+    answer: 'Evet. Sigortalılık süresi olan ancak prim ödeme gün sayısı yetersiz olanlar, isteğe bağlı sigorta yoluyla eksik günlerini tamamlayabilir. İsteğe bağlı sigorta için prim, alt sınır (asgari ücret) ile üst sınır arasında seçilen prime esas kazanç üzerinden hesaplanır. Başvuru e-SGK veya SGK müdürlüklerine yapılabilir.',
+  },
+  {
+    category: 'Emeklilik', order: 53,
+    question: 'Yurt dışında çalışılan süreler emeklilikte sayılır mı?',
+    answer: 'Türkiye ile sosyal güvenlik sözleşmesi imzalanmış ülkelerde (Almanya, Fransa, Hollanda, ABD vb.) geçen çalışma süreleri, emeklilik hesabında dikkate alınabilir. Bunun için yurt dışı hizmet borçlanması yapılması gerekmektedir. Borçlanma, Türkiye\'ye döndükten sonra SGK\'ya başvurarak gerçekleştirilir; ödeme yapıldıktan sonra söz konusu süreler Türkiye\'deki prim günlerine eklenir.',
+  },
+  {
+    category: 'Emeklilik', order: 54,
+    question: 'Askerlik süresi emeklilik için borçlanılabilir mi?',
+    answer: 'Evet. Er veya erbaş olarak silahaltında geçirilen askerlik süreleri, 5510 sayılı Kanun kapsamında borçlanılabilir. Borçlanma başvurusu SGK\'ya yapılır; prime esas kazanç olarak talep tarihindeki alt sınır (asgari ücret) ya da belirlenen bir tutar üzerinden hesaplama yapılır. Bu süre tamamlandığında prim gün sayısına eklenir.',
+  },
+  {
+    category: 'Emeklilik', order: 55,
+    question: 'Doğum borçlanması nedir, kimler yararlanabilir?',
+    answer: '5510 sayılı Kanun\'un geçici 41. maddesi uyarınca sigortalı kadınlar, her çocuk için en fazla 2 yıl (toplam en fazla 3 çocuk için 6 yıl) üzere doğum borçlanması yapabilir. Borçlanma yapılabilmesi için doğum tarihi itibarıyla sigortalılık başlangıcının bulunması ve doğumdan önce en az 1 günlük sigortalılık kaydının mevcut olması gerekir. Bu borçlanma prim gün sayısını artırır ve emekliliği öne alabilir.',
+  },
+
+  // ─── Genel Sağlık Sigortası (GSS) ────────────────────────────────────────
+  {
+    category: 'Genel Sağlık Sigortası', order: 56,
+    question: 'Genel Sağlık Sigortası (GSS) nedir, kimler kapsamındadır?',
+    answer: '5510 sayılı Kanun\'un 4A bölümü kapsamında 1 Ocak 2012 itibarıyla zorunlu hale gelen GSS; SGK\'ya bağlı olarak çalışanlar, emekliler, Bağ-Kur\'lular ve gelir testine tabi tutulan bireyler dahil olmak üzere Türkiye\'de ikamet eden tüm vatandaşları kapsamaktadır. GSS ile kamu sağlık sistemi üzerinden muayene, ilaç, hastane ve ameliyat gibi hizmetlerden yararlanılabilir.',
+  },
+  {
+    category: 'Genel Sağlık Sigortası', order: 57,
+    question: 'Gelir testi nedir, başvurmazsam ne olur?',
+    answer: 'Herhangi bir sosyal güvenlik kapsamında bulunmayan bireyler için aylık geliri belirlemek amacıyla yapılan İl Müdürlükleri ya da e-Devlet üzerinden gerçekleştirilen incelemedir. Gelir testi yaptırmayanlar, GSS primlerinin tespitinde asgari ücretin iki katı esas alınarak prime tabi tutulur. Bu nedenle testi zamanında yaptırmak gereksiz mali yük doğmasını önler.',
+  },
+  {
+    category: 'Genel Sağlık Sigortası', order: 58,
+    question: 'GSS prim tutarı ne kadardır?',
+    answer: 'GSS prim oranı %12,5 olup işçi-işveren ayrımına göre şöyle paylaşılır: çalışan %5, işveren %7,5. Herhangi bir işte çalışmayanlar için aylık prim, gelir testi sonucuna göre belirlenen prime esas kazanç üzerinden hesaplanır. Asgari ücretin üçte birinin altında geliri olanların primleri devlet tarafından ödenir.',
+  },
+  {
+    category: 'Genel Sağlık Sigortası', order: 59,
+    question: 'GSS prim borcu sağlık hizmetlerine erişimi etkiler mi?',
+    answer: 'Evet. GSS prim borcu 60 günü aşan kişiler acil servis, koruyucu sağlık hizmetleri ve iş kazası/meslek hastalığı dışındaki sağlık hizmetlerinden yararlanamaz. Borcun ödenmesi veya yapılandırılmasından sonra sağlık hizmetlerine erişim otomatik olarak yeniden başlar. Acil sağlık hizmetleri, prim borcundan bağımsız olarak her koşulda sunulmaktadır.',
+  },
+  {
+    category: 'Genel Sağlık Sigortası', order: 60,
+    question: '18 yaşını dolduran çocukların GSS güvencesi devam eder mi?',
+    answer: '18 yaşını doldurmuş ve yükseköğretim kurumuna devam eden çocuklar, 25 yaşına kadar ebeveynleri üzerinden GSS kapsamında sağlık hizmetlerinden yararlanabilir. Öğrenim durumu bilgisi YÖKSİS üzerinden SGK ile paylaşıldığından ayrıca belge gerekmeyebilir; ancak okul kaydı sona erdiğinde veya 25 yaş aşıldığında bu güvence otomatik olarak kesilir ve bireysel kayıt yaptırılması gerekir.',
+  },
+  {
+    category: 'Genel Sağlık Sigortası', order: 61,
+    question: 'Muayene katılım payı nedir, hangi hizmetlerde uygulanır?',
+    answer: 'Sağlık hizmetlerinde öngörülen katkı payı; muayene, ilaç reçetesi ve bazı tanı işlemlerinde uygulanır. Birinci basamak sağlık kuruluşuna (aile hekimi) direkt başvurularda katkı payı düşüktür; sevk zinciri dışında doğrudan hastaneye ya da özel sağlık kuruluşuna gidildiğinde oranlar artar. Belirli kronik hastalıklar, engellilik durumu ve yeşil kart kapsamındakiler katkı payından muaf tutulabilir.',
+  },
+  {
+    category: 'Genel Sağlık Sigortası', order: 62,
+    question: 'Tamamlayıcı sağlık sigortası (TSS) GSS ile nasıl çalışır?',
+    answer: 'Tamamlayıcı sağlık sigortası, GSS\'nin karşılamadığı katılım paylarını, fark ücretlerini ve ek hizmet bedellerini güvence altına almak üzere SGK ile protokol imzalamış özel sigorta şirketleri aracılığıyla sunulan bir üst güvencedir. TSS poliçeleri, çalışan tarafından bireysel ya da işveren aracılığıyla grup olarak satın alınabilir. SGK sistemiyle entegre çalıştığından poliçenin sunduğu teminat kapsamı önceden dikkatli incelenmelidir.',
+  },
+  {
+    category: 'Genel Sağlık Sigortası', order: 63,
+    question: 'Yurt dışındaki Türk vatandaşları GSS kapsamında mıdır?',
+    answer: 'Türkiye\'de ikamet etmeyen ve yurt dışında çalışan Türk vatandaşları, GSS primlerini ödeme yükümlülüğünden muaf tutulabilir. Geçici olarak yurt dışında bulunanların (turizm, tedavi vb.) mevcut GSS güvenceleri genellikle yurt içindeyken geçerlidir. Yurt dışında sağlık hizmeti alınması durumunda bedelini SGK\'nın karşılayabilmesi için ikili sosyal güvenlik sözleşmesi bulunması veya önceden onay alınması gerekmektedir.',
+  },
 ];
 
 async function seedSSSData({ strapi }) {
   try {
-    const count = await strapi.entityService.count('api::sss.sss');
-    strapi.log.info(`SSS seed: tabloda ${count} kayıt var.`);
-    if (count > 0) return;
+    const existing = await strapi.entityService.findMany('api::sss.sss', {
+      fields: ['order'],
+      pagination: { pageSize: 500 },
+    });
+    const existingOrders = new Set((existing || []).map((e) => e.order));
 
-    for (const item of SSS_DATA) {
+    const toAdd = SSS_DATA.filter((item) => !existingOrders.has(item.order));
+
+    if (toAdd.length === 0) {
+      strapi.log.info(`SSS seed: tüm ${SSS_DATA.length} kayıt zaten mevcut, ekleme yapılmadı.`);
+      return;
+    }
+
+    for (const item of toAdd) {
       await strapi.entityService.create('api::sss.sss', {
         data: { ...item, publishedAt: new Date() },
       });
     }
-    strapi.log.info(`SSS seed: ${SSS_DATA.length} soru eklendi.`);
+    strapi.log.info(`SSS seed: ${toAdd.length} yeni soru eklendi (toplam ${SSS_DATA.length}).`);
   } catch (err) {
     strapi.log.error(`SSS seed hatası: ${err.message}`);
   }
