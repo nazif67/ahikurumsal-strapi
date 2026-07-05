@@ -471,19 +471,23 @@ async function seedSSSData({ strapi }) {
 
 async function deduplicateSSSData({ strapi }) {
   try {
-    const all = await strapi.entityService.findMany('api::sss.sss', {
-      fields: ['id', 'order'],
-      pagination: { pageSize: 1000 },
+    const all = await strapi.db.query('api::sss.sss').findMany({
+      select: ['id', 'order'],
+      orderBy: { id: 'asc' },
+      limit: -1,
     });
+
+    strapi.log.info(`SSS dedup: veritabanında toplam ${(all || []).length} kayıt bulundu.`);
 
     const seen = new Map();
     const toDelete = [];
 
     for (const item of (all || [])) {
-      if (seen.has(item.order)) {
+      const key = item.order != null ? item.order : `null_${item.id}`;
+      if (seen.has(key)) {
         toDelete.push(item.id);
       } else {
-        seen.set(item.order, item.id);
+        seen.set(key, item.id);
       }
     }
 
@@ -493,7 +497,7 @@ async function deduplicateSSSData({ strapi }) {
     }
 
     for (const id of toDelete) {
-      await strapi.entityService.delete('api::sss.sss', id);
+      await strapi.db.query('api::sss.sss').delete({ where: { id } });
     }
     strapi.log.info(`SSS dedup: ${toDelete.length} tekrar eden kayıt silindi.`);
   } catch (err) {
