@@ -37,6 +37,8 @@ async function setPublicPermissions({ strapi }) {
     'api::sss.sss.findOne',
     'api::yorum.yorum.find',
     'api::hakkimda.hakkimda.find',
+    'api::kidem-tavan.kidem-tavan.find',
+    'api::maas-parametre.maas-parametre.find',
     'plugin::upload.content-api.find',
     'plugin::upload.content-api.findOne',
   ];
@@ -505,6 +507,43 @@ async function deduplicateSSSData({ strapi }) {
   }
 }
 
+// Maaş hesaplama parametreleri single type'ı boşsa 2026 varsayılanlarıyla
+// bir kere doldurur. Kayıt varsa dokunmaz (panelden değiştirilen değerler korunur).
+async function seedMaasParametre({ strapi }) {
+  try {
+    const existing = await strapi.db
+      .query('api::maas-parametre.maas-parametre')
+      .findOne({});
+
+    if (existing) {
+      strapi.log.info('Maaş parametre seed: kayıt zaten mevcut, ekleme yapılmadı.');
+      return;
+    }
+
+    await strapi.db.query('api::maas-parametre.maas-parametre').create({
+      data: {
+        yil: 2026,
+        asgari_brut: 33030,
+        sgk_tavan: 297270,
+        dilim1_ust: 190000,
+        dilim2_ust: 400000,
+        dilim3_ust: 1500000,
+        dilim4_ust: 5300000,
+        engellilik1: 12000,
+        engellilik2: 7000,
+        engellilik3: 3000,
+        isveren_sgk_yok: 0.2175,
+        isveren_sgk_genel: 0.1975,
+        isveren_sgk_imalat: 0.1675,
+        publishedAt: new Date(),
+      },
+    });
+    strapi.log.info('Maaş parametre seed: 2026 varsayılan değerleri eklendi.');
+  } catch (err) {
+    strapi.log.error(`Maaş parametre seed hatası: ${err.message}`);
+  }
+}
+
 module.exports = {
   register() {},
 
@@ -514,5 +553,6 @@ module.exports = {
     await ensureServerApiToken({ strapi });
     await deduplicateSSSData({ strapi });
     await seedSSSData({ strapi });
+    await seedMaasParametre({ strapi });
   },
 };

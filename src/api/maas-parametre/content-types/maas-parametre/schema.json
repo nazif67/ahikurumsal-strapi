@@ -1,0 +1,68 @@
+{
+  "kind": "singleType",
+  "collectionName": "maas_parametre",
+  "info": {
+    "singularName": "maas-parametre",
+    "pluralName": "maas-parametreler",
+    "displayName": "Maaş Hesaplama Parametreleri",
+    "description": "Brütten nete / netten brüte maaş hesaplama aracının bordro parametreleri (yıllık güncellenir)"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "yil": {
+      "type": "integer",
+      "default": 2026
+    },
+    "asgari_brut": {
+      "type": "decimal",
+      "default": 33030
+    },
+    "sgk_tavan": {
+      "type": "decimal",
+      "default": 297270
+    },
+    "dilim1_ust": {
+      "type": "decimal",
+      "default": 190000
+    },
+    "dilim2_ust": {
+      "type": "decimal",
+      "default": 400000
+    },
+    "dilim3_ust": {
+      "type": "decimal",
+      "default": 1500000
+    },
+    "dilim4_ust": {
+      "type": "decimal",
+      "default": 5300000
+    },
+    "engellilik1": {
+      "type": "decimal",
+      "default": 12000
+    },
+    "engellilik2": {
+      "type": "decimal",
+      "default": 7000
+    },
+    "engellilik3": {
+      "type": "decimal",
+      "default": 3000
+    },
+    "isveren_sgk_yok": {
+      "type": "decimal",
+      "default": 0.2175
+    },
+    "isveren_sgk_genel": {
+      "type": "decimal",
+      "default": 0.1975
+    },
+    "isveren_sgk_imalat": {
+      "type": "decimal",
+      "default": 0.1675
+    }
+  }
+}
