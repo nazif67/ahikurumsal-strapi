@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_arac_sss",
+  "info": {
+    "displayName": "SSS Ögesi",
+    "icon": "question",
+    "description": "Sıkça sorulan soru ve cevabı"
+  },
+  "options": {},
+  "attributes": {
+    "soru": {
+      "type": "string",
+      "required": true
+    },
+    "cevap": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "arac_icerikler",
+  "info": {
+    "singularName": "arac-icerik",
+    "pluralName": "arac-icerikler",
+    "displayName": "Araç İçeriği (SEO)",
+    "description": "Hesaplama araçları sayfalarının başlık, meta ve SEO içerikleri. slug alanı koddaki araç adresiyle eşleşmelidir (değiştirmeyin)."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "ad": {
+      "type": "string"
+    },
+    "h1": {
+      "type": "string"
+    },
+    "kart": {
+      "type": "text"
+    },
+    "meta_baslik": {
+      "type": "string"
+    },
+    "meta_aciklama": {
+      "type": "text"
+    },
+    "keywords": {
+      "type": "text"
+    },
+    "icerik": {
+      "type": "richtext"
+    },
+    "sss": {
+      "type": "component",
+      "repeatable": true,
+      "component": "arac.sss"
+    }
+  }
+}

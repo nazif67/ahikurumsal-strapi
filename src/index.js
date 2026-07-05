@@ -39,6 +39,8 @@ async function setPublicPermissions({ strapi }) {
     'api::hakkimda.hakkimda.find',
     'api::kidem-tavan.kidem-tavan.find',
     'api::maas-parametre.maas-parametre.find',
+    'api::arac-icerik.arac-icerik.find',
+    'api::arac-icerik.arac-icerik.findOne',
     'plugin::upload.content-api.find',
     'plugin::upload.content-api.findOne',
   ];
@@ -544,6 +546,196 @@ async function seedMaasParametre({ strapi }) {
   }
 }
 
+// Araç sayfalarının SEO içerikleri — koddaki mevcut içeriğin panelden
+// düzenlenebilir kopyası. Yalnızca ilgili slug yoksa oluşturulur; var olan
+// kayda dokunulmaz (panelden yapılan düzenlemeler korunur).
+const ARAC_ICERIK_SEED = [
+  {
+    slug: 'brutten-nete-maas-hesaplama',
+    ad: 'Brütten Nete / Netten Brüte Maaş',
+    h1: 'Brütten Nete ve Netten Brüte Maaş Hesaplama (2026)',
+    kart: 'Brüt maaştan net ele geçeni, net maaştan brütü ve işveren maliyetini 12 ay bazında hesaplayın.',
+    meta_baslik: 'Brütten Nete Maaş Hesaplama 2026 | Netten Brüte & İşveren Maliyeti',
+    meta_aciklama:
+      '2026 güncel mevzuatına göre brütten nete ve netten brüte maaş hesaplama. SGK, gelir vergisi, damga vergisi kesintileri, asgari ücret istisnası ve işveren maliyeti 12 aylık tabloda.',
+    keywords:
+      'brütten nete maaş hesaplama, netten brüte maaş hesaplama, 2026 maaş hesaplama, net maaş hesaplama, işveren maliyeti hesaplama, bordro hesaplama',
+    icerik:
+      '**Brütten nete maaş hesaplama** aracı, brüt ücretinizi girerek elinize geçecek net maaşı; **netten brüte** modu ise hedeflediğiniz net maaşa karşılık gelen brüt ücreti bulmanızı sağlar. Hesaplama 2026 güncel mevzuatına göre yapılır; SGK işçi payı (%14), işsizlik payı (%1), kümülatif gelir vergisi dilimleri, asgari ücret gelir vergisi istisnası ve damga vergisi dikkate alınır.\n\nAracın en güçlü yanı 12 aylık hesaplama yapmasıdır. Gelir vergisi kümülatif matrah üzerinden hesaplandığından, brüt sabit kalsa bile net ücret yıl içinde dilim atladıkça düşebilir. Araç bu değişimi ay ay tabloda gösterir, işveren maliyetini (teşvik seçenekli) ve tüm bordro kırılımlarını sunar; sonuçları Excel’e aktarabilirsiniz.',
+    sss: [
+      {
+        soru: 'Brütten nete maaş nasıl hesaplanır?',
+        cevap:
+          'Brüt ücretten önce %15 SGK ve işsizlik işçi payı (%14 SGK + %1 işsizlik) düşülür. Kalan tutar gelir vergisi matrahını oluşturur; bu matraha kümülatif gelir vergisi dilimleri uygulanır ve asgari ücret gelir vergisi istisnası düşülür. Son olarak damga vergisi (asgari ücrete isabet eden kısmı istisna) çıkarılır. Geriye kalan tutar net ele geçen maaştır.',
+      },
+      {
+        soru: 'Aynı maaşta net ücret neden yıl içinde düşüyor?',
+        cevap:
+          'Gelir vergisi yıl boyunca biriken kümülatif matrah üzerinden hesaplanır. Matrah arttıkça çalışan bir üst gelir vergisi dilimine geçer (%15’ten %20’ye, sonra %27’ye…). Bu nedenle brüt sabit olsa bile ilerleyen aylarda gelir vergisi artar ve net maaş bir miktar düşer.',
+      },
+      {
+        soru: 'İşveren maliyeti nasıl hesaplanır?',
+        cevap:
+          'Toplam işveren maliyeti; brüt ücrete işveren SGK primi ve işveren işsizlik priminin eklenmesiyle bulunur. Teşvik yoksa toplam yük yaklaşık %23,75, genel 5510 teşvikinde %21,75, imalat sektöründe %18,75 seviyesindedir.',
+      },
+    ],
+  },
+  {
+    slug: 'kidem-tazminati-hesaplama',
+    ad: 'Kıdem Tazminatı',
+    h1: 'Kıdem Tazminatı Hesaplama (2026)',
+    kart: 'Çalışma sürenize ve brüt maaşınıza göre kıdem tazminatınızı tavan uygulamasıyla hesaplayın.',
+    meta_baslik: 'Kıdem Tazminatı Hesaplama 2026 | Güncel Tavan ile',
+    meta_aciklama:
+      'Kıdem tazminatı hesaplama aracı: brüt maaş ve çalışma sürenizi girin, güncel kıdem tazminatı tavanı uygulanarak tahmini tutarı anında görün.',
+    keywords:
+      'kıdem tazminatı hesaplama, kıdem tazminatı nasıl hesaplanır, 2026 kıdem tazminatı tavanı, kıdem tazminatı ne kadar',
+    icerik:
+      '**Kıdem tazminatı**, iş sözleşmesi belirli koşullarla sona eren ve aynı işverende en az 1 yıl çalışmış işçiye ödenen bir tazminattır. Çalışanın her tam hizmet yılı için 30 günlük giydirilmiş brüt ücreti tutarında hesaplanır; bir yıldan artan süreler oranlanır. Ödenecek yıllık tutar, yasal **kıdem tazminatı tavanını** aşamaz.\n\n**Kıdem tazminatı hesaplama** aracımızla brüt aylık ücretinizi ve çalışma sürenizi (yıl ve ay) girerek tahmini kıdem tazminatınızı anında görebilirsiniz. Güncel tavan otomatik uygulanır; brütünüz tavanı aşarsa hesaplamada bu durum belirtilir.',
+    sss: [
+      {
+        soru: 'Kıdem tazminatı nasıl hesaplanır?',
+        cevap:
+          'Her tam hizmet yılı için 30 günlük giydirilmiş brüt ücret esas alınır; yıldan artan süreler oranlanır. Hesaplanan tutar dönemin yasal kıdem tazminatı tavanını aşamaz. Kıdem tazminatına hak kazanmak için aynı işverende en az 1 yıl çalışmış olmak gerekir.',
+      },
+      {
+        soru: '2026 kıdem tazminatı tavanı ne kadar?',
+        cevap:
+          'Kıdem tazminatı tavanı her yıl ocak ve temmuz aylarında memur maaş katsayılarına göre güncellenir. Bir çalışanın yıllık kıdem tazminatı o dönem geçerli tavanı aşamaz. Aracımız güncel tavanı otomatik uygular ve hesaplama ekranında gösterir.',
+      },
+      {
+        soru: 'Kıdem tazminatı kimlere ödenir?',
+        cevap:
+          'Aynı işverende en az 1 yıl çalışan işçiye; işveren tarafından haklı neden dışında fesih, işçinin haklı nedenle feshi, askerlik, emeklilik, evlilik (kadın işçi için 1 yıl içinde) ve ölüm gibi durumlarda kıdem tazminatı ödenir.',
+      },
+    ],
+  },
+  {
+    slug: 'ihbar-tazminati-hesaplama',
+    ad: 'İhbar Tazminatı',
+    h1: 'İhbar Tazminatı Hesaplama (2026)',
+    kart: 'Kıdeminize göre bildirim sürenizi ve ihbar tazminatı tutarını hesaplayın.',
+    meta_baslik: 'İhbar Tazminatı Hesaplama 2026 | Bildirim Süresi ve Tutar',
+    meta_aciklama:
+      'İhbar tazminatı hesaplama aracı: çalışma sürenize göre bildirim süresini (2–8 hafta) ve brüt ücret üzerinden ihbar tazminatı tutarını hesaplayın.',
+    keywords:
+      'ihbar tazminatı hesaplama, ihbar tazminatı kaç gün, ihbar süresi hesaplama, ihbar tazminatı nasıl hesaplanır',
+    icerik:
+      '**İhbar tazminatı**, iş sözleşmesini yasal bildirim süresine uymadan fesheden tarafın karşı tarafa ödediği tazminattır. Bildirim süresi çalışma kıdemine göre değişir: 6 aydan az için 2 hafta, 6 ay–1,5 yıl için 4 hafta, 1,5–3 yıl için 6 hafta, 3 yıldan fazla için 8 haftalık brüt ücret.\n\n**İhbar tazminatı hesaplama** aracıyla brüt aylık ücretinizi ve çalışma sürenizi girerek uygulanacak bildirim süresini ve ödenecek/alacak tutarı kolayca öğrenebilirsiniz.',
+    sss: [
+      {
+        soru: 'İhbar tazminatı kaç gün / kaç hafta olur?',
+        cevap:
+          'Çalışma süresine bağlıdır: 6 aydan az için 2 hafta, 6 ay–1,5 yıl için 4 hafta, 1,5–3 yıl için 6 hafta, 3 yıldan fazla için 8 haftalık brüt ücret tutarındadır.',
+      },
+      {
+        soru: 'İhbar tazminatını kim öder?',
+        cevap:
+          'Bildirim süresine uymadan iş sözleşmesini fesheden taraf (işveren ya da işçi) karşı tarafa ihbar tazminatı öder. Yani hem işçi hem işveren duruma göre ihbar tazminatı ödeyebilir.',
+      },
+      {
+        soru: 'İhbar tazminatı ile kıdem tazminatı aynı mı?',
+        cevap:
+          'Hayır. Kıdem tazminatı çalışma yılına göre 30 günlük ücret esasına dayanır ve tavan uygulanır. İhbar tazminatı ise bildirim süresine uyulmamasının karşılığıdır ve tavan uygulanmaz.',
+      },
+    ],
+  },
+  {
+    slug: 'fazla-mesai-hesaplama',
+    ad: 'Fazla Mesai',
+    h1: 'Fazla Mesai Ücreti Hesaplama (2026)',
+    kart: 'Brüt maaşınıza göre %50 zamlı fazla mesai saat ücretinizi ve toplam tutarı hesaplayın.',
+    meta_baslik: 'Fazla Mesai Hesaplama 2026 | %50 Zamlı Saat Ücreti',
+    meta_aciklama:
+      'Fazla mesai hesaplama aracı: brüt maaş ve fazla çalışılan saati girin, %50 zamlı fazla mesai saat ücretini ve toplam fazla mesai ücretini hesaplayın.',
+    keywords:
+      'fazla mesai hesaplama, fazla mesai ücreti nasıl hesaplanır, fazla mesai saat ücreti, mesai ücreti hesaplama',
+    icerik:
+      'Haftalık 45 saati aşan çalışmalar **fazla mesai** sayılır ve her fazla mesai saati için normal saatlik ücretin %50 fazlası ödenir. Saatlik ücret, aylık brüt ücretin 225’e bölünmesiyle (30 gün × 7,5 saat) bulunur; yıllık fazla çalışma sınırı 270 saattir. **Fazla mesai hesaplama** aracıyla brüt ücretinizi ve fazla çalıştığınız saati girerek hak ettiğiniz ücreti hesaplayabilirsiniz.',
+    sss: [
+      {
+        soru: 'Fazla mesai ücreti nasıl hesaplanır?',
+        cevap:
+          'Saatlik ücret aylık brüt ücretin 225’e bölünmesiyle bulunur. Her fazla mesai saati için bu ücretin %50 fazlası (1,5 katı) ödenir. Toplam fazla mesai ücreti = saatlik ücret × 1,5 × fazla mesai saati.',
+      },
+      {
+        soru: 'Yılda en fazla kaç saat fazla mesai yapılabilir?',
+        cevap:
+          'İş Kanunu’na göre fazla çalışma süresi yılda 270 saati aşamaz. Ayrıca fazla mesai için işçinin yazılı onayı gerekir.',
+      },
+    ],
+  },
+  {
+    slug: 'maas-zammi-hesaplama',
+    ad: 'Maaş Zammı',
+    h1: 'Maaş Zammı Hesaplama (2026)',
+    kart: 'Zam oranını girin, zam sonrası brüt ve tahmini net maaşınızı görün.',
+    meta_baslik: 'Maaş Zammı Hesaplama 2026 | Zam Sonrası Net Maaş',
+    meta_aciklama:
+      'Maaş zammı hesaplama aracı: mevcut brüt maaş ve zam oranını girin, zam sonrası brüt ve tahmini net maaşınızı hemen hesaplayın.',
+    keywords:
+      'maaş zammı hesaplama, zam sonrası maaş hesaplama, yüzde zam hesaplama, maaş artışı hesaplama',
+    icerik:
+      '**Maaş zammı hesaplama** aracı, mevcut brüt maaşınıza uygulanan zam oranını girerek zam sonrası brüt maaşı ve tahmini net maaşınızı gösterir. Böylece yüzdesel zammın net ücretinize gerçek yansımasını (SGK ve gelir vergisi kesintileri sonrası) önceden görebilirsiniz.',
+    sss: [
+      {
+        soru: 'Zam sonrası net maaş nasıl hesaplanır?',
+        cevap:
+          'Önce yeni brüt maaş bulunur (mevcut brüt × (1 + zam oranı)). Ardından bu brüt üzerinden SGK, gelir vergisi ve damga vergisi kesintileri düşülerek tahmini net maaş hesaplanır. Net artış, brüt artıştan daha düşük olabilir çünkü kesintiler de artar.',
+      },
+    ],
+  },
+  {
+    slug: 'yillik-izin-hesaplama',
+    ad: 'Yıllık İzin',
+    h1: 'Yıllık İzin Hesaplama (2026)',
+    kart: 'İşe başlama tarihinize göre yıllık ücretli izin hakkınızı ve kalan izninizi hesaplayın.',
+    meta_baslik: 'Yıllık İzin Hesaplama 2026 | İzin Hakkı Gün Sayısı',
+    meta_aciklama:
+      'Yıllık izin hesaplama aracı: işe başlama tarihinizi girin, kıdeminize göre yıllık ücretli izin hakkınızı (14–26 gün) ve kalan izninizi öğrenin.',
+    keywords:
+      'yıllık izin hesaplama, yıllık izin hakkı kaç gün, izin günü hesaplama, yıllık ücretli izin',
+    icerik:
+      '**Yıllık ücretli izin** hakkı, 1 yılını dolduran çalışanın kıdemine göre belirlenir: 1–5 yıl için 14, 5–15 yıl için 20, 15 yıl ve üzeri için 26 iş günü. 18 yaşından küçük ve 50 yaşından büyük çalışanlara kıdemine bakılmaksızın en az 20 iş günü izin verilir. **Yıllık izin hesaplama** aracıyla işe başlama tarihinizi girerek hak ettiğiniz ve kalan izin gününüzü öğrenebilirsiniz.',
+    sss: [
+      {
+        soru: 'Yıllık ücretli izin hakkı kaç gündür?',
+        cevap:
+          '1–5 yıl kıdem için 14 iş günü, 5–15 yıl için 20 iş günü, 15 yıl ve üzeri için 26 iş günüdür. 18 yaş altı ve 50 yaş üstü çalışanlara en az 20 iş günü izin verilir.',
+      },
+      {
+        soru: 'Yıllık izne ne zaman hak kazanılır?',
+        cevap:
+          'Çalışan, işe başladığı tarihten itibaren en az 1 yıl çalışmasını tamamladığında yıllık ücretli izne hak kazanır. İlk yıl dolmadan yasal yıllık izin hakkı doğmaz.',
+      },
+    ],
+  },
+];
+
+async function seedAracIcerik({ strapi }) {
+  try {
+    let eklenen = 0;
+    for (const item of ARAC_ICERIK_SEED) {
+      const mevcut = await strapi.db
+        .query('api::arac-icerik.arac-icerik')
+        .findOne({ where: { slug: item.slug } });
+      if (mevcut) continue;
+
+      await strapi.entityService.create('api::arac-icerik.arac-icerik', {
+        data: { ...item, publishedAt: new Date() },
+      });
+      eklenen += 1;
+    }
+    if (eklenen > 0) {
+      strapi.log.info(`Araç içeriği seed: ${eklenen} araç sayfası eklendi.`);
+    } else {
+      strapi.log.info('Araç içeriği seed: tüm kayıtlar mevcut, ekleme yapılmadı.');
+    }
+  } catch (err) {
+    strapi.log.error(`Araç içeriği seed hatası: ${err.message}`);
+  }
+}
+
 module.exports = {
   register() {},
 
@@ -554,5 +746,6 @@ module.exports = {
     await deduplicateSSSData({ strapi });
     await seedSSSData({ strapi });
     await seedMaasParametre({ strapi });
+    await seedAracIcerik({ strapi });
   },
 };
