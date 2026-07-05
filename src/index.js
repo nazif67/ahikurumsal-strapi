@@ -469,6 +469,38 @@ async function seedSSSData({ strapi }) {
   }
 }
 
+async function deduplicateSSSData({ strapi }) {
+  try {
+    const all = await strapi.entityService.findMany('api::sss.sss', {
+      fields: ['id', 'order'],
+      pagination: { pageSize: 1000 },
+    });
+
+    const seen = new Map();
+    const toDelete = [];
+
+    for (const item of (all || [])) {
+      if (seen.has(item.order)) {
+        toDelete.push(item.id);
+      } else {
+        seen.set(item.order, item.id);
+      }
+    }
+
+    if (toDelete.length === 0) {
+      strapi.log.info('SSS dedup: tekrar eden kayıt yok.');
+      return;
+    }
+
+    for (const id of toDelete) {
+      await strapi.entityService.delete('api::sss.sss', id);
+    }
+    strapi.log.info(`SSS dedup: ${toDelete.length} tekrar eden kayıt silindi.`);
+  } catch (err) {
+    strapi.log.error(`SSS dedup hatası: ${err.message}`);
+  }
+}
+
 module.exports = {
   register() {},
 
@@ -476,6 +508,7 @@ module.exports = {
     await setPublicPermissions({ strapi });
     await backfillDuyuruSlugs({ strapi });
     await ensureServerApiToken({ strapi });
+    await deduplicateSSSData({ strapi });
     await seedSSSData({ strapi });
   },
 };
