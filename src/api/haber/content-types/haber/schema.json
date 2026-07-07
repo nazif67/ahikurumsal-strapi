@@ -31,8 +31,7 @@
       "type": "date"
     },
     "category": {
-      "type": "enumeration",
-      "enum": ["Genel", "İş Hukuku", "Mevzuat", "SGK & Sigorta", "Ücret & Tazminat", "İşe Alım"],
+      "type": "string",
       "default": "Genel"
     },
     "coverImage": {
