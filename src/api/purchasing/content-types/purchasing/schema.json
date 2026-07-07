@@ -1,0 +1,90 @@
+{
+  "kind": "collectionType",
+  "collectionName": "purchasings",
+  "info": {
+    "singularName": "purchasing",
+    "pluralName": "purchasings",
+    "displayName": "Purchasing",
+    "description": "Kurum Yönetimi - Satın Alma"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "institution": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::institution.institution",
+      "required": true
+    },
+    "itemName": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "type": "string",
+      "required": false
+    },
+    "supplier": {
+      "type": "string",
+      "required": false
+    },
+    "quantity": {
+      "type": "integer",
+      "required": false,
+      "default": 1
+    },
+    "unitPrice": {
+      "type": "decimal",
+      "required": false
+    },
+    "totalPrice": {
+      "type": "decimal",
+      "required": false
+    },
+    "purchaseDate": {
+      "type": "date",
+      "required": false
+    },
+    "deliveryDate": {
+      "type": "date",
+      "required": false
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "ordered",
+        "delivered",
+        "cancelled"
+      ],
+      "default": "pending",
+      "required": true
+    },
+    "invoiceNumber": {
+      "type": "string",
+      "required": false
+    },
+    "invoice": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "images"
+      ]
+    },
+    "notes": {
+      "type": "text",
+      "required": false
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-profile.company-profile"
+    }
+  }
+}
+
+

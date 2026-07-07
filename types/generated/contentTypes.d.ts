@@ -430,6 +430,45 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAracIcerikAracIcerik extends Struct.CollectionTypeSchema {
+  collectionName: 'arac_icerikler';
+  info: {
+    description: 'Hesaplama ara\u00E7lar\u0131 sayfalar\u0131n\u0131n ba\u015Fl\u0131k, meta ve SEO i\u00E7erikleri. slug alan\u0131 koddaki ara\u00E7 adresiyle e\u015Fle\u015Fmelidir (de\u011Fi\u015Ftirmeyin).';
+    displayName: 'Ara\u00E7 \u0130\u00E7eri\u011Fi (SEO)';
+    pluralName: 'arac-icerikler';
+    singularName: 'arac-icerik';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    ad: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    h1: Schema.Attribute.String;
+    icerik: Schema.Attribute.RichText;
+    kart: Schema.Attribute.Text;
+    keywords: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::arac-icerik.arac-icerik'
+    > &
+      Schema.Attribute.Private;
+    meta_aciklama: Schema.Attribute.Text;
+    meta_baslik: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    sss: Schema.Attribute.Component<'arac.sss', true>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
   collectionName: 'blogs';
   info: {
@@ -442,6 +481,7 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    author: Schema.Attribute.String;
     category: Schema.Attribute.String;
     content: Schema.Attribute.RichText;
     coverImage: Schema.Attribute.Media<'images'>;
@@ -470,6 +510,247 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBranchBranch extends Struct.CollectionTypeSchema {
+  collectionName: 'branches';
+  info: {
+    description: '\u015Eubeler';
+    displayName: 'Branch';
+    pluralName: 'branches';
+    singularName: 'branch';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    address: Schema.Attribute.Text;
+    city: Schema.Attribute.String;
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    district: Schema.Attribute.String;
+    key: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::branch.branch'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCompanyProfileCompanyProfile
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'company_profiles';
+  info: {
+    description: '';
+    displayName: 'Company Profile';
+    pluralName: 'company-profiles';
+    singularName: 'company-profile';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    addressFull: Schema.Attribute.String;
+    ahiIkEnabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    ahiIkEndDate: Schema.Attribute.Date;
+    ahiIkStartDate: Schema.Attribute.Date;
+    city: Schema.Attribute.String;
+    companyAbout: Schema.Attribute.Text;
+    companyGallery: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    companyName: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    demoAccount: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    district: Schema.Attribute.String;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    employeeCount: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    isFrozen: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::company-profile.company-profile'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images' | 'files'>;
+    owner: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    phone: Schema.Attribute.String;
+    pricingPlan: Schema.Attribute.Enumeration<['plan1', 'plan2', 'plan3']> &
+      Schema.Attribute.DefaultTo<'plan1'>;
+    publishedAt: Schema.Attribute.DateTime;
+    sector: Schema.Attribute.Relation<'oneToOne', 'api::sector.sector'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiContactFormContactForm extends Struct.CollectionTypeSchema {
+  collectionName: 'contact_forms';
+  info: {
+    description: '';
+    displayName: 'Contact Form';
+    pluralName: 'contact-forms';
+    singularName: 'contact-form';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-form.contact-form'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    subject: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDecisionDecision extends Struct.CollectionTypeSchema {
+  collectionName: 'decisions';
+  info: {
+    description: 'Kurum Y\u00F6netimi - Kararlar';
+    displayName: 'Decision';
+    pluralName: 'decisions';
+    singularName: 'decision';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    decisionDate: Schema.Attribute.Date;
+    description: Schema.Attribute.Text;
+    document: Schema.Attribute.Media<'files'>;
+    institution: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::institution.institution'
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::decision.decision'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDemoRequestDemoRequest extends Struct.CollectionTypeSchema {
+  collectionName: 'demo_requests';
+  info: {
+    description: 'Demo form submissions from website';
+    displayName: 'Demo Request';
+    pluralName: 'demo-requests';
+    singularName: 'demo-request';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    companyName: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    fullName: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::demo-request.demo-request'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text;
+    notes: Schema.Attribute.Text;
+    phone: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    source: Schema.Attribute.String & Schema.Attribute.DefaultTo<'website'>;
+    status: Schema.Attribute.Enumeration<
+      ['pending', 'contacted', 'converted', 'rejected']
+    > &
+      Schema.Attribute.DefaultTo<'pending'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDepartmentDepartment extends Struct.CollectionTypeSchema {
+  collectionName: 'departments';
+  info: {
+    displayName: 'Department';
+    pluralName: 'departments';
+    singularName: 'department';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    key: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::department.department'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiDuyuruDuyuru extends Struct.CollectionTypeSchema {
   collectionName: 'duyurular';
   info: {
@@ -482,6 +763,7 @@ export interface ApiDuyuruDuyuru extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    author: Schema.Attribute.String;
     category: Schema.Attribute.Enumeration<
       ['Genel', '\u0130K Duyurusu', 'Mevzuat', 'Etkinlik', '\u00D6nemli']
     > &
@@ -528,6 +810,7 @@ export interface ApiHaberHaber extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    author: Schema.Attribute.String;
     category: Schema.Attribute.Enumeration<
       [
         'Genel',
@@ -636,6 +919,91 @@ export interface ApiIletisimMesajlariIletisimMesajlari
   };
 }
 
+export interface ApiIncomingDocumentIncomingDocument
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'incoming_documents';
+  info: {
+    description: 'Kurum Y\u00F6netimi - Gelen Evraklar';
+    displayName: 'Incoming Document';
+    pluralName: 'incoming-documents';
+    singularName: 'incoming-document';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    document: Schema.Attribute.Media<'files'>;
+    institution: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::institution.institution'
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::incoming-document.incoming-document'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    receivedDate: Schema.Attribute.Date;
+    receivedFrom: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
+  collectionName: 'institutions';
+  info: {
+    description: 'Kurum Y\u00F6netimi - Kurumlar\u0131m';
+    displayName: 'Institution';
+    pluralName: 'institutions';
+    singularName: 'institution';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    activityReport: Schema.Attribute.Media<'files'>;
+    address: Schema.Attribute.Text & Schema.Attribute.Required;
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    foundationDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    foundationDeed: Schema.Attribute.Media<'files'>;
+    internalAuditReports: Schema.Attribute.Media<'files', true>;
+    itoRegistrationNumber: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::institution.institution'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    sgkRegistrationNumber: Schema.Attribute.String;
+    signatureCircular: Schema.Attribute.Media<'files'>;
+    taxNumber: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiKidemTavanKidemTavan extends Struct.SingleTypeSchema {
   collectionName: 'kidem_tavan';
   info: {
@@ -660,6 +1028,441 @@ export interface ApiKidemTavanKidemTavan extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     tutar: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiLeaveRequestLeaveRequest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'leave_requests';
+  info: {
+    description: '\u0130zin Talepleri';
+    displayName: 'Leave Request';
+    pluralName: 'leave-requests';
+    singularName: 'leave-request';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    document: Schema.Attribute.Media<'files' | 'images'>;
+    endDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    leaveType: Schema.Attribute.Enumeration<
+      [
+        'annual',
+        'sick',
+        'maternity',
+        'paternity',
+        'funeral',
+        'wedding',
+        'moving',
+        'unpaid',
+        'other',
+      ]
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::leave-request.leave-request'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    reason: Schema.Attribute.Text;
+    reviewedAt: Schema.Attribute.DateTime;
+    reviewedBy: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    reviewNote: Schema.Attribute.Text;
+    startDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    status: Schema.Attribute.Enumeration<['pending', 'approved', 'rejected']> &
+      Schema.Attribute.DefaultTo<'pending'>;
+    totalDays: Schema.Attribute.Integer & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    worker: Schema.Attribute.Relation<'manyToOne', 'api::worker.worker'>;
+  };
+}
+
+export interface ApiMaasParametreMaasParametre extends Struct.SingleTypeSchema {
+  collectionName: 'maas_parametre';
+  info: {
+    description: 'Br\u00FCtten nete / netten br\u00FCte maa\u015F hesaplama arac\u0131n\u0131n bordro parametreleri (y\u0131ll\u0131k g\u00FCncellenir)';
+    displayName: 'Maa\u015F Hesaplama Parametreleri';
+    pluralName: 'maas-parametreler';
+    singularName: 'maas-parametre';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    asgari_brut: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<33030>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dilim1_ust: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<190000>;
+    dilim2_ust: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<400000>;
+    dilim3_ust: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<1500000>;
+    dilim4_ust: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<5300000>;
+    engellilik1: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<12000>;
+    engellilik2: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<7000>;
+    engellilik3: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<3000>;
+    isveren_sgk_genel: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0.1975>;
+    isveren_sgk_imalat: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0.1675>;
+    isveren_sgk_yok: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0.2175>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::maas-parametre.maas-parametre'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sgk_tavan: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<297270>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    yil: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<2026>;
+  };
+}
+
+export interface ApiOutgoingDocumentOutgoingDocument
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'outgoing_documents';
+  info: {
+    description: 'Kurum Y\u00F6netimi - Giden Evraklar';
+    displayName: 'Outgoing Document';
+    pluralName: 'outgoing-documents';
+    singularName: 'outgoing-document';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    document: Schema.Attribute.Media<'files'>;
+    institution: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::institution.institution'
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::outgoing-document.outgoing-document'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sentDate: Schema.Attribute.Date;
+    sentTo: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPdksAttendancePdksAttendance
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'pdks_attendances';
+  info: {
+    description: 'Personel giri\u015F-\u00E7\u0131k\u0131\u015F kay\u0131tlar\u0131';
+    displayName: 'PDKS Attendance';
+    pluralName: 'pdks-attendances';
+    singularName: 'pdks-attendance';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    branch: Schema.Attribute.Relation<'manyToOne', 'api::branch.branch'>;
+    checkTime: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    checkType: Schema.Attribute.Enumeration<['in', 'out']> &
+      Schema.Attribute.Required;
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    > &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ipAddress: Schema.Attribute.String;
+    isManual: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::pdks-attendance.pdks-attendance'
+    > &
+      Schema.Attribute.Private;
+    locationLatitude: Schema.Attribute.Decimal;
+    locationLongitude: Schema.Attribute.Decimal;
+    manualEntryBy: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    notes: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    qrCodeSession: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::qr-code-session.qr-code-session'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    userAgent: Schema.Attribute.String;
+    worker: Schema.Attribute.Relation<'manyToOne', 'api::worker.worker'> &
+      Schema.Attribute.Required;
+  };
+}
+
+export interface ApiPositionPosition extends Struct.CollectionTypeSchema {
+  collectionName: 'positions';
+  info: {
+    description: '';
+    displayName: 'Position';
+    pluralName: 'positions';
+    singularName: 'position';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks;
+    key: Schema.Attribute.String & Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::position.position'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPropertyProperty extends Struct.CollectionTypeSchema {
+  collectionName: 'properties';
+  info: {
+    description: 'Kurum Y\u00F6netimi - Konutlar\u0131m';
+    displayName: 'Property';
+    pluralName: 'properties';
+    singularName: 'property';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    acquisitionMethod: Schema.Attribute.String;
+    address: Schema.Attribute.Text;
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    daskPolicy: Schema.Attribute.Media<'files'>;
+    daskPolicyDate: Schema.Attribute.Date;
+    daskPolicyNumber: Schema.Attribute.String;
+    institution: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::institution.institution'
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::property.property'
+    > &
+      Schema.Attribute.Private;
+    photo: Schema.Attribute.Media<'images'>;
+    publishedAt: Schema.Attribute.DateTime;
+    titleDeed: Schema.Attribute.Media<'files'>;
+    uavtAddress: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    usageType: Schema.Attribute.String;
+  };
+}
+
+export interface ApiPurchasingPurchasing extends Struct.CollectionTypeSchema {
+  collectionName: 'purchasings';
+  info: {
+    description: 'Kurum Y\u00F6netimi - Sat\u0131n Alma';
+    displayName: 'Purchasing';
+    pluralName: 'purchasings';
+    singularName: 'purchasing';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    category: Schema.Attribute.String;
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    deliveryDate: Schema.Attribute.Date;
+    institution: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::institution.institution'
+    > &
+      Schema.Attribute.Required;
+    invoice: Schema.Attribute.Media<'files' | 'images'>;
+    invoiceNumber: Schema.Attribute.String;
+    itemName: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::purchasing.purchasing'
+    > &
+      Schema.Attribute.Private;
+    notes: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    purchaseDate: Schema.Attribute.Date;
+    quantity: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<1>;
+    status: Schema.Attribute.Enumeration<
+      ['pending', 'ordered', 'delivered', 'cancelled']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'pending'>;
+    supplier: Schema.Attribute.String;
+    totalPrice: Schema.Attribute.Decimal;
+    unitPrice: Schema.Attribute.Decimal;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiQrCodeSessionQrCodeSession
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'qr_code_sessions';
+  info: {
+    description: 'PDKS i\u00E7in g\u00FCvenli QR kod oturumlar\u0131';
+    displayName: 'QR Code Session';
+    pluralName: 'qr-code-sessions';
+    singularName: 'qr-code-session';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    allowedIpAddresses: Schema.Attribute.Text;
+    branch: Schema.Attribute.Relation<'manyToOne', 'api::branch.branch'>;
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    > &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    expiresAt: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::qr-code-session.qr-code-session'
+    > &
+      Schema.Attribute.Private;
+    locationLatitude: Schema.Attribute.Decimal;
+    locationLongitude: Schema.Attribute.Decimal;
+    locationRadius: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<100>;
+    maxUsageCount: Schema.Attribute.Integer;
+    notes: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    sessionName: Schema.Attribute.String;
+    sessionToken: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    usageCount: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+  };
+}
+
+export interface ApiReminderReminder extends Struct.CollectionTypeSchema {
+  collectionName: 'reminders';
+  info: {
+    description: 'An\u0131msat\u0131c\u0131lar - Reminder Notifications';
+    displayName: 'Reminder';
+    pluralName: 'reminders';
+    singularName: 'reminder';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    isSent: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::reminder.reminder'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text;
+    phoneNumber: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    relatedProperty: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::property.property'
+    >;
+    relatedVehicle: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::vehicle.vehicle'
+    >;
+    reminderDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    reminderType: Schema.Attribute.Enumeration<
+      ['dask_policy', 'vehicle_insurance', 'vehicle_inspection', 'custom']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'custom'>;
+    sentAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<['pending', 'sent', 'failed']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'pending'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -696,6 +1499,237 @@ export interface ApiSablonSablon extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSectorSector extends Struct.CollectionTypeSchema {
+  collectionName: 'sectors';
+  info: {
+    description: '';
+    displayName: 'Sector';
+    pluralName: 'sectors';
+    singularName: 'sector';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks;
+    key: Schema.Attribute.String & Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sector.sector'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSssSss extends Struct.CollectionTypeSchema {
+  collectionName: 'sss_items';
+  info: {
+    description: 'S\u0131k\u00E7a sorulan sorular ve cevaplar\u0131';
+    displayName: 'SSS - S\u0131k\u00E7a Sorulan Sorular';
+    pluralName: 'sss-items';
+    singularName: 'sss';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    answer: Schema.Attribute.Text & Schema.Attribute.Required;
+    category: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::sss.sss'> &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    publishedAt: Schema.Attribute.DateTime;
+    question: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTaskTask extends Struct.CollectionTypeSchema {
+  collectionName: 'tasks';
+  info: {
+    description: 'G\u00F6rev Y\u00F6netimi';
+    displayName: 'Task';
+    pluralName: 'tasks';
+    singularName: 'task';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    assignedBy: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    assignedTo: Schema.Attribute.Relation<'manyToOne', 'api::worker.worker'>;
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    completedAt: Schema.Attribute.DateTime;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    dueDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    isRecurring: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::task.task'> &
+      Schema.Attribute.Private;
+    priority: Schema.Attribute.Enumeration<['low', 'medium', 'high']> &
+      Schema.Attribute.DefaultTo<'medium'>;
+    publishedAt: Schema.Attribute.DateTime;
+    recurringInterval: Schema.Attribute.Enumeration<
+      ['daily', 'weekly', 'monthly']
+    >;
+    status: Schema.Attribute.Enumeration<
+      ['pending', 'in_progress', 'completed', 'not_completed']
+    > &
+      Schema.Attribute.DefaultTo<'pending'>;
+    statusNote: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiVehicleVehicle extends Struct.CollectionTypeSchema {
+  collectionName: 'vehicles';
+  info: {
+    description: 'Kurum Y\u00F6netimi - Ara\u00E7lar\u0131m';
+    displayName: 'Vehicle';
+    pluralName: 'vehicles';
+    singularName: 'vehicle';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    inspectionDate: Schema.Attribute.Date;
+    institution: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::institution.institution'
+    > &
+      Schema.Attribute.Required;
+    insurancePolicyDate: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::vehicle.vehicle'
+    > &
+      Schema.Attribute.Private;
+    model: Schema.Attribute.String & Schema.Attribute.Required;
+    photo: Schema.Attribute.Media<'images'>;
+    plateNumber: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    usedBy: Schema.Attribute.String;
+  };
+}
+
+export interface ApiWorkerWorker extends Struct.CollectionTypeSchema {
+  collectionName: 'workers';
+  info: {
+    description: '\u00C7al\u0131\u015Fan bilgileri';
+    displayName: 'Worker';
+    pluralName: 'workers';
+    singularName: 'worker';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    birthDate: Schema.Attribute.Date;
+    branch: Schema.Attribute.Relation<'manyToOne', 'api::branch.branch'>;
+    company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company-profile.company-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    criminalRecordDoc: Schema.Attribute.Media<'files'>;
+    department: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::department.department'
+    >;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    employmentStartDoc: Schema.Attribute.Media<'files'>;
+    firstName: Schema.Attribute.String & Schema.Attribute.Required;
+    hasAllModules: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    hasHumanResources: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    hasInstitutionManagement: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    hasPdks: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    hasPurchasing: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    hireDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    identityDoc: Schema.Attribute.Media<'files'>;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    isDisabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isForeigner: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isRetired: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    lastName: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::worker.worker'
+    > &
+      Schema.Attribute.Private;
+    militaryDoc: Schema.Attribute.Media<'files'>;
+    nationality: Schema.Attribute.String;
+    noticePaid: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    noticePay: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    phone: Schema.Attribute.String;
+    photo: Schema.Attribute.Media<'images'>;
+    populationRegistryDoc: Schema.Attribute.Media<'files'>;
+    position: Schema.Attribute.Relation<'manyToOne', 'api::position.position'>;
+    profession: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    residenceDoc: Schema.Attribute.Media<'files'>;
+    salary: Schema.Attribute.Decimal;
+    severancePaid: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    severancePay: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    terminationDate: Schema.Attribute.Date;
+    terminationReason: Schema.Attribute.Text;
+    tokenExpiresAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    uploadToken: Schema.Attribute.String;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1240,13 +2274,36 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::arac-icerik.arac-icerik': ApiAracIcerikAracIcerik;
       'api::blog.blog': ApiBlogBlog;
+      'api::branch.branch': ApiBranchBranch;
+      'api::company-profile.company-profile': ApiCompanyProfileCompanyProfile;
+      'api::contact-form.contact-form': ApiContactFormContactForm;
+      'api::decision.decision': ApiDecisionDecision;
+      'api::demo-request.demo-request': ApiDemoRequestDemoRequest;
+      'api::department.department': ApiDepartmentDepartment;
       'api::duyuru.duyuru': ApiDuyuruDuyuru;
       'api::haber.haber': ApiHaberHaber;
       'api::hakkimda.hakkimda': ApiHakkimdaHakkimda;
       'api::iletisim-mesajlari.iletisim-mesajlari': ApiIletisimMesajlariIletisimMesajlari;
+      'api::incoming-document.incoming-document': ApiIncomingDocumentIncomingDocument;
+      'api::institution.institution': ApiInstitutionInstitution;
       'api::kidem-tavan.kidem-tavan': ApiKidemTavanKidemTavan;
+      'api::leave-request.leave-request': ApiLeaveRequestLeaveRequest;
+      'api::maas-parametre.maas-parametre': ApiMaasParametreMaasParametre;
+      'api::outgoing-document.outgoing-document': ApiOutgoingDocumentOutgoingDocument;
+      'api::pdks-attendance.pdks-attendance': ApiPdksAttendancePdksAttendance;
+      'api::position.position': ApiPositionPosition;
+      'api::property.property': ApiPropertyProperty;
+      'api::purchasing.purchasing': ApiPurchasingPurchasing;
+      'api::qr-code-session.qr-code-session': ApiQrCodeSessionQrCodeSession;
+      'api::reminder.reminder': ApiReminderReminder;
       'api::sablon.sablon': ApiSablonSablon;
+      'api::sector.sector': ApiSectorSector;
+      'api::sss.sss': ApiSssSss;
+      'api::task.task': ApiTaskTask;
+      'api::vehicle.vehicle': ApiVehicleVehicle;
+      'api::worker.worker': ApiWorkerWorker;
       'api::yorum.yorum': ApiYorumYorum;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

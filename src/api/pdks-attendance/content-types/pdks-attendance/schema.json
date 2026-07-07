@@ -1,0 +1,73 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pdks_attendances",
+  "info": {
+    "singularName": "pdks-attendance",
+    "pluralName": "pdks-attendances",
+    "displayName": "PDKS Attendance",
+    "description": "Personel giriş-çıkış kayıtları"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "worker": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::worker.worker",
+      "required": true
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-profile.company-profile",
+      "required": true
+    },
+    "checkType": {
+      "type": "enumeration",
+      "enum": ["in", "out"],
+      "required": true
+    },
+    "checkTime": {
+      "type": "datetime",
+      "required": true
+    },
+    "qrCodeSession": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::qr-code-session.qr-code-session"
+    },
+    "locationLatitude": {
+      "type": "decimal"
+    },
+    "locationLongitude": {
+      "type": "decimal"
+    },
+    "ipAddress": {
+      "type": "string"
+    },
+    "userAgent": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "text"
+    },
+    "isManual": {
+      "type": "boolean",
+      "default": false
+    },
+    "manualEntryBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "branch": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::branch.branch"
+    }
+  }
+}
+
+

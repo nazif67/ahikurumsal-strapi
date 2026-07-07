@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "decisions",
+  "info": {
+    "singularName": "decision",
+    "pluralName": "decisions",
+    "displayName": "Decision",
+    "description": "Kurum Yönetimi - Kararlar"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "institution": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::institution.institution",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "decisionDate": {
+      "type": "date",
+      "required": false
+    },
+    "document": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-profile.company-profile"
+    }
+  }
+}
+
+
+
+
+
+

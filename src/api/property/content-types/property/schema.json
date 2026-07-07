@@ -1,0 +1,81 @@
+{
+  "kind": "collectionType",
+  "collectionName": "properties",
+  "info": {
+    "singularName": "property",
+    "pluralName": "properties",
+    "displayName": "Property",
+    "description": "Kurum Yönetimi - Konutlarım"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "institution": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::institution.institution",
+      "required": true
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "usageType": {
+      "type": "string",
+      "required": false
+    },
+    "address": {
+      "type": "text",
+      "required": false
+    },
+    "uavtAddress": {
+      "type": "text",
+      "required": false
+    },
+    "daskPolicyNumber": {
+      "type": "string",
+      "required": false
+    },
+    "daskPolicyDate": {
+      "type": "date",
+      "required": false
+    },
+    "acquisitionMethod": {
+      "type": "string",
+      "required": false
+    },
+    "daskPolicy": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "titleDeed": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-profile.company-profile"
+    }
+  }
+}
+
+
+
+
+
+

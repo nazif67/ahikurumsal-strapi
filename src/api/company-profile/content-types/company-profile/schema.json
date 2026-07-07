@@ -1,0 +1,94 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_profiles",
+  "info": {
+    "singularName": "company-profile",
+    "pluralName": "company-profiles",
+    "displayName": "Company Profile",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "owner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "companyName": {
+      "type": "string",
+      "required": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "addressFull": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "district": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "isFrozen": {
+      "type": "boolean"
+    },
+    "sector": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::sector.sector"
+    },
+    "companyGallery": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "companyAbout": {
+      "type": "text"
+    },
+    "ahiIkEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "ahiIkStartDate": {
+      "type": "date"
+    },
+    "ahiIkEndDate": {
+      "type": "date"
+    },
+    "employeeCount": {
+      "type": "integer",
+      "default": 0
+    },
+    "pricingPlan": {
+      "type": "enumeration",
+      "enum": ["plan1", "plan2", "plan3"],
+      "default": "plan1"
+    },
+    "demoAccount": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

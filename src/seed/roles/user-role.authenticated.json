@@ -1,0 +1,244 @@
+{
+  "documentId": "kkgbtjnfkq9asxjvisj39imi",
+  "name": "Authenticated",
+  "description": "Default firm role",
+  "type": "authenticated",
+  "locale": null,
+  "permissions": [
+    {
+      "documentId": "uh84vpopx1ksiy15llyvf6vt",
+      "action": "api::application-log.application-log.find",
+      "locale": null
+    },
+    {
+      "documentId": "dj8g5zol9n9bcwu6e7vvpwz3",
+      "action": "api::application-log.application-log.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "uluuf6l807k4m3erkpwxw0j4",
+      "action": "api::company-profile.company-profile.find",
+      "locale": null
+    },
+    {
+      "documentId": "hagssggakwjhma6d67t8ejnw",
+      "action": "api::company-profile.company-profile.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "dc9qwj32eyaeuwpbl6rtfgh4",
+      "action": "api::company-profile.company-profile.update",
+      "locale": null
+    },
+    {
+      "documentId": "fdsltgvjhsb3x8yhu4mos5sf",
+      "action": "api::department.department.find",
+      "locale": null
+    },
+    {
+      "documentId": "wmqeu6ggnf2skd0a5rx6wf49",
+      "action": "api::department.department.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "suvdscbjbnimmswl8rn9a6ke",
+      "action": "api::job-listing.job-listing.create",
+      "locale": null
+    },
+    {
+      "documentId": "y9yhpok9rf4k5mq3jc25xggk",
+      "action": "api::job-listing.job-listing.delete",
+      "locale": null
+    },
+    {
+      "documentId": "mmsvuz7dzq65yz0391w1q4fj",
+      "action": "api::job-listing.job-listing.find",
+      "locale": null
+    },
+    {
+      "documentId": "b6n7ab4rdgeny1zxpmlxr1h1",
+      "action": "api::job-listing.job-listing.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "nqu7s5xlw6yd2wbluintqhny",
+      "action": "api::job-listing.job-listing.update",
+      "locale": null
+    },
+    {
+      "documentId": "dkm9yc5ewir5fk6zvjxpx38b",
+      "action": "api::position.position.find",
+      "locale": null
+    },
+    {
+      "documentId": "czsacrx1bcysx099rmx5ffx5",
+      "action": "api::position.position.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "ooavpba5nquvoku1ixujsqj4",
+      "action": "api::posting-right.posting-right.find",
+      "locale": null
+    },
+    {
+      "documentId": "r7mcv6uo2pwtuw712ct6qflf",
+      "action": "api::posting-right.posting-right.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "rq54t5rl6vkiffijt0eiwine",
+      "action": "api::profession.profession.find",
+      "locale": null
+    },
+    {
+      "documentId": "raxh21yb6optb0bm8m7f53cx",
+      "action": "api::profession.profession.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "qwtb3f130en2tpc8smgcdexc",
+      "action": "api::sector.sector.find",
+      "locale": null
+    },
+    {
+      "documentId": "ya7wedbgomjaa0iyc60zy4z9",
+      "action": "api::sector.sector.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "lr7wj0e9aoxjq8w4wx0r4x3m",
+      "action": "api::service.service.findBySlug",
+      "locale": null
+    },
+    {
+      "documentId": "jgupbbve9ospppdi6c20cxym",
+      "action": "api::work-mode.work-mode.find",
+      "locale": null
+    },
+    {
+      "documentId": "n8gtjbjrwuq4umihn3rn089t",
+      "action": "api::work-mode.work-mode.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "mxhh7d6sjylfu1k0xlgiqt5j",
+      "action": "plugin::upload.content-api.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "lr_auth_create_001",
+      "action": "api::leave-request.leave-request.create",
+      "locale": null
+    },
+    {
+      "documentId": "lr_auth_find_001",
+      "action": "api::leave-request.leave-request.find",
+      "locale": null
+    },
+    {
+      "documentId": "lr_auth_findone_001",
+      "action": "api::leave-request.leave-request.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "lr_auth_update_001",
+      "action": "api::leave-request.leave-request.update",
+      "locale": null
+    },
+    {
+      "documentId": "lr_auth_delete_001",
+      "action": "api::leave-request.leave-request.delete",
+      "locale": null
+    },
+    {
+      "documentId": "lr_auth_approve_001",
+      "action": "api::leave-request.leave-request.approve",
+      "locale": null
+    },
+    {
+      "documentId": "lr_auth_reject_001",
+      "action": "api::leave-request.leave-request.reject",
+      "locale": null
+    },
+    {
+      "documentId": "lr_auth_getremaining_001",
+      "action": "api::leave-request.leave-request.getRemainingDays",
+      "locale": null
+    },
+    {
+      "documentId": "worker_auth_find_001",
+      "action": "api::worker.worker.find",
+      "locale": null
+    },
+    {
+      "documentId": "worker_auth_findone_001",
+      "action": "api::worker.worker.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "worker_auth_create_001",
+      "action": "api::worker.worker.create",
+      "locale": null
+    },
+    {
+      "documentId": "worker_auth_update_001",
+      "action": "api::worker.worker.update",
+      "locale": null
+    },
+    {
+      "documentId": "worker_auth_delete_001",
+      "action": "api::worker.worker.delete",
+      "locale": null
+    },
+    {
+      "documentId": "task_auth_find_001",
+      "action": "api::task.task.find",
+      "locale": null
+    },
+    {
+      "documentId": "task_auth_findone_001",
+      "action": "api::task.task.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "task_auth_create_001",
+      "action": "api::task.task.create",
+      "locale": null
+    },
+    {
+      "documentId": "task_auth_update_001",
+      "action": "api::task.task.update",
+      "locale": null
+    },
+    {
+      "documentId": "task_auth_delete_001",
+      "action": "api::task.task.delete",
+      "locale": null
+    },
+    {
+      "documentId": "evif0mu5nu1ezzean2tu89ed",
+      "action": "plugin::upload.content-api.upload",
+      "locale": null
+    },
+    {
+      "documentId": "m0q2cl73dhrm12cd1txo8thr",
+      "action": "plugin::users-permissions.auth.changePassword",
+      "locale": null
+    },
+    {
+      "documentId": "j3firog8rfg2vflad0hivnvy",
+      "action": "plugin::users-permissions.auth.connect",
+      "locale": null
+    },
+    {
+      "documentId": "i5cdfeednkqc6dx3xiie3z2n",
+      "action": "plugin::users-permissions.role.find",
+      "locale": null
+    },
+    {
+      "documentId": "fbkpcn1rhdr2of128uc3kc7u",
+      "action": "plugin::users-permissions.user.me",
+      "locale": null
+    }
+  ]
+}

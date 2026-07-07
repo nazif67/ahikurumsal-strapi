@@ -25,6 +25,7 @@ module.exports = [
         'http://localhost:3003',
         'https://ahikurumsal.com',
         'https://www.ahikurumsal.com',
+        'https://admin.ahikurumsal.com',
       ],
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
       headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],

@@ -1,0 +1,204 @@
+{
+  "kind": "collectionType",
+  "collectionName": "workers",
+  "info": {
+    "singularName": "worker",
+    "pluralName": "workers",
+    "displayName": "Worker",
+    "description": "Çalışan bilgileri"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "phone": {
+      "type": "string"
+    },
+    "birthDate": {
+      "type": "date"
+    },
+    "hireDate": {
+      "type": "date",
+      "required": true
+    },
+    "profession": {
+      "type": "string"
+    },
+    "department": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::department.department"
+    },
+    "branch": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::branch.branch"
+    },
+    "position": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::position.position"
+    },
+    "isRetired": {
+      "type": "boolean",
+      "default": false
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "isForeigner": {
+      "type": "boolean",
+      "default": false
+    },
+    "nationality": {
+      "type": "string"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "salary": {
+      "type": "decimal"
+    },
+    "terminationDate": {
+      "type": "date"
+    },
+    "terminationReason": {
+      "type": "text"
+    },
+    "severancePay": {
+      "type": "decimal",
+      "default": 0
+    },
+    "noticePay": {
+      "type": "decimal",
+      "default": 0
+    },
+    "severancePaid": {
+      "type": "boolean",
+      "default": false
+    },
+    "noticePaid": {
+      "type": "boolean",
+      "default": false
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-profile.company-profile"
+    },
+    "criminalRecordDoc": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "populationRegistryDoc": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "identityDoc": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "residenceDoc": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "militaryDoc": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "employmentStartDoc": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "uploadToken": {
+      "type": "string"
+    },
+    "tokenExpiresAt": {
+      "type": "datetime"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "hasHumanResources": {
+      "type": "boolean",
+      "default": false,
+      "description": "İnsan Kaynakları modülüne erişim"
+    },
+    "hasPdks": {
+      "type": "boolean",
+      "default": false,
+      "description": "PDKS modülüne erişim"
+    },
+    "hasInstitutionManagement": {
+      "type": "boolean",
+      "default": false,
+      "description": "Kurum Yönetimi modülüne erişim"
+    },
+    "hasPurchasing": {
+      "type": "boolean",
+      "default": false,
+      "description": "Satın Alma modülüne erişim"
+    },
+    "hasAllModules": {
+      "type": "boolean",
+      "default": false,
+      "description": "Tüm Modüllere erişim"
+    }
+  }
+}
+

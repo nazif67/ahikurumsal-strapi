@@ -1,0 +1,83 @@
+{
+  "kind": "collectionType",
+  "collectionName": "institutions",
+  "info": {
+    "singularName": "institution",
+    "pluralName": "institutions",
+    "displayName": "Institution",
+    "description": "Kurum Yönetimi - Kurumlarım"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "text",
+      "required": true
+    },
+    "foundationDate": {
+      "type": "date",
+      "required": true
+    },
+    "taxNumber": {
+      "type": "string",
+      "required": true
+    },
+    "sgkRegistrationNumber": {
+      "type": "string",
+      "required": false
+    },
+    "itoRegistrationNumber": {
+      "type": "string",
+      "required": false
+    },
+    "activityReport": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "foundationDeed": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "internalAuditReports": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "signatureCircular": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-profile.company-profile"
+    }
+  }
+}
+
+
+
+
+
+

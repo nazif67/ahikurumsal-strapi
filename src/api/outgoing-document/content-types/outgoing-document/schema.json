@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "outgoing_documents",
+  "info": {
+    "singularName": "outgoing-document",
+    "pluralName": "outgoing-documents",
+    "displayName": "Outgoing Document",
+    "description": "Kurum Yönetimi - Giden Evraklar"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "institution": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::institution.institution",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "sentTo": {
+      "type": "string",
+      "required": true
+    },
+    "sentDate": {
+      "type": "date",
+      "required": false
+    },
+    "document": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-profile.company-profile"
+    }
+  }
+}
+
+
+
+
+
+

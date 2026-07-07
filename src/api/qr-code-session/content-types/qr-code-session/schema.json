@@ -1,0 +1,68 @@
+{
+  "kind": "collectionType",
+  "collectionName": "qr_code_sessions",
+  "info": {
+    "singularName": "qr-code-session",
+    "pluralName": "qr-code-sessions",
+    "displayName": "QR Code Session",
+    "description": "PDKS için güvenli QR kod oturumları"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-profile.company-profile",
+      "required": true
+    },
+    "sessionToken": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "expiresAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "usageCount": {
+      "type": "integer",
+      "default": 0
+    },
+    "maxUsageCount": {
+      "type": "integer"
+    },
+    "branch": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::branch.branch"
+    },
+    "locationLatitude": {
+      "type": "decimal"
+    },
+    "locationLongitude": {
+      "type": "decimal"
+    },
+    "locationRadius": {
+      "type": "integer",
+      "default": 100
+    },
+    "allowedIpAddresses": {
+      "type": "text"
+    },
+    "sessionName": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "text"
+    }
+  }
+}
+
+

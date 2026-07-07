@@ -119,7 +119,15 @@ module.exports = (plugin) => {
       if (!user) {
         return ctx.badRequest(null, [{ messages: [{ id: 'No user found' }] }]);
       }
-      ctx.body = await sanitizeUser(user, ctx);
+      // role'ü populate ederek döndür (panel yönlendirmesi role.type'a bağlı)
+      const fullUser = await strapi.documents('plugin::users-permissions.user').findOne({
+        documentId: user.documentId,
+        populate: { role: true },
+      });
+      const sanitized = await sanitizeUser(fullUser || user, ctx);
+      // sanitize bazı rollerde (ör. worker) role ilişkisini kırpabiliyor;
+      // panel yönlendirmesi role.type'a bağlı olduğu için garanti altına al
+      ctx.body = { ...sanitized, role: fullUser?.role || sanitized.role };
     },
     async find(ctx) {
         const { query } = ctx;

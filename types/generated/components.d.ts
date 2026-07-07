@@ -1,5 +1,18 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface AracSss extends Struct.ComponentSchema {
+  collectionName: 'components_arac_sss';
+  info: {
+    description: 'S\u0131k\u00E7a sorulan soru ve cevab\u0131';
+    displayName: 'SSS \u00D6gesi';
+    icon: 'question';
+  };
+  attributes: {
+    cevap: Schema.Attribute.Text & Schema.Attribute.Required;
+    soru: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedFaqItem extends Struct.ComponentSchema {
   collectionName: 'components_shared_faq_items';
   info: {
@@ -57,6 +70,7 @@ export interface SharedSeo extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'arac.sss': AracSss;
       'shared.faq-item': SharedFaqItem;
       'shared.seo': SharedSeo;
     }

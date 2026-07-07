@@ -1,0 +1,82 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reminders",
+  "info": {
+    "singularName": "reminder",
+    "pluralName": "reminders",
+    "displayName": "Reminder",
+    "description": "Anımsatıcılar - Reminder Notifications"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    },
+    "reminderDate": {
+      "type": "datetime",
+      "required": true
+    },
+    "reminderType": {
+      "type": "enumeration",
+      "enum": [
+        "dask_policy",
+        "vehicle_insurance",
+        "vehicle_inspection",
+        "custom"
+      ],
+      "default": "custom",
+      "required": true
+    },
+    "phoneNumber": {
+      "type": "string",
+      "required": false
+    },
+    "message": {
+      "type": "text",
+      "required": false
+    },
+    "isSent": {
+      "type": "boolean",
+      "default": false
+    },
+    "sentAt": {
+      "type": "datetime",
+      "required": false
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "sent",
+        "failed"
+      ],
+      "default": "pending",
+      "required": true
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-profile.company-profile"
+    },
+    "relatedProperty": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::property.property"
+    },
+    "relatedVehicle": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::vehicle.vehicle"
+    }
+  }
+}
+
+

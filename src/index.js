@@ -62,6 +62,151 @@ async function setPublicPermissions({ strapi }) {
   }
 }
 
+// İK/PDKS modülleri: Employee (işveren) ve Worker (çalışan) rollerini oluşturur,
+// config-sync rol dosyalarındaki izinleri (sadece İK modülleriyle sınırlı) yükler
+// ve pozisyon/departman/sektör varsayılanlarını seed eder.
+async function setupIkModules({ strapi }) {
+  const fs = require('fs');
+  const path = require('path');
+
+  const INCLUDE = new Set([
+    'worker', 'branch', 'institution', 'department', 'position', 'qr-code-session',
+    'pdks-attendance', 'leave-request', 'task', 'decision', 'incoming-document',
+    'outgoing-document', 'reminder', 'property', 'purchasing', 'vehicle',
+    'company-profile', 'sector', 'demo-request', 'contact-form',
+  ]);
+
+  // Kariyer modüllerinin izinlerini ele; sadece İK api'leri + plugin aksiyonları kalsın
+  const isAllowedAction = (action) => {
+    if (action.startsWith('plugin::')) return true;
+    const m = action.match(/^api::([^.]+)\./);
+    return m ? INCLUDE.has(m[1]) : false;
+  };
+
+  const grant = async (roleId, actions) => {
+    for (const action of actions) {
+      const existing = await strapi.db
+        .query('plugin::users-permissions.permission')
+        .findOne({ where: { action, role: roleId } });
+      if (!existing) {
+        await strapi.db
+          .query('plugin::users-permissions.permission')
+          .create({ data: { action, role: roleId, enabled: true } });
+      } else if (!existing.enabled) {
+        await strapi.db
+          .query('plugin::users-permissions.permission')
+          .update({ where: { id: existing.id }, data: { enabled: true } });
+      }
+    }
+  };
+
+  const roleByType = (type) =>
+    strapi.db.query('plugin::users-permissions.role').findOne({ where: { type } });
+
+  const ensureRole = async ({ name, description, type }) => {
+    let role = await roleByType(type);
+    if (!role) {
+      role = await strapi.db
+        .query('plugin::users-permissions.role')
+        .create({ data: { name, description, type } });
+    }
+    return role;
+  };
+
+  // 1) İşveren (employee) ve çalışan (worker) rolleri
+  const employeeRole = await ensureRole({
+    name: 'Employee',
+    description: 'Admin/Yönetici kullanıcı rolü',
+    type: 'employee',
+  });
+  const workerRole = await ensureRole({
+    name: 'Worker',
+    description: 'Çalışan (PDKS) rolü',
+    type: 'worker',
+  });
+
+  // 2) config-sync rol dosyalarından izinler (İK ile sınırlı)
+  const rolesDir = path.join(__dirname, 'seed', 'roles');
+  const loadActions = (file) => {
+    try {
+      const data = JSON.parse(fs.readFileSync(path.join(rolesDir, file), 'utf8'));
+      return (data.permissions || []).map((p) => p.action).filter(isAllowedAction);
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const publicRole = await roleByType('public');
+  const authRole = await roleByType('authenticated');
+
+  if (publicRole) await grant(publicRole.id, loadActions('user-role.public.json'));
+  if (authRole) await grant(authRole.id, loadActions('user-role.authenticated.json'));
+  await grant(employeeRole.id, loadActions('user-role.employee.json'));
+
+  // Employee (admin): Demo Talepleri yönetimi (config-sync dosyasında eksik)
+  await grant(employeeRole.id, [
+    'api::demo-request.demo-request.find',
+    'api::demo-request.demo-request.findOne',
+    'api::demo-request.demo-request.update',
+    'api::demo-request.demo-request.delete',
+  ]);
+
+  // Worker (çalışan) rolü — config-sync dosyası yok. Panelin worker akışının
+  // gerçekten çağırdığı endpoint'ler (custom handler'lar dahil):
+  //  - QR okut/giriş-çıkış, kendi PDKS kayıtları, izin talebi, görevleri
+  await grant(workerRole.id, [
+    'plugin::users-permissions.user.me',
+    'api::worker.worker.find', // fetchWorkerProfile (filters[user][id])
+    'api::qr-code-session.qr-code-session.validateSession', // QR doğrula
+    'api::pdks-attendance.pdks-attendance.check', // giriş-çıkış okut
+    'api::pdks-attendance.pdks-attendance.getMyRecords', // kendi kayıtları
+    'api::leave-request.leave-request.create', // izin talebi oluştur
+    'api::leave-request.leave-request.getMyRequests', // izinlerim
+    'api::leave-request.leave-request.getMyRemainingDays', // kalan izin
+    'api::task.task.getMyTasks', // görevlerim
+    'api::task.task.updateStatus', // görev durumunu güncelle
+  ]);
+
+  // 3) Varsayılan pozisyon / departman / sektör
+  const seedDefaults = async (uid, items) => {
+    for (const item of items) {
+      const found = await strapi.db.query(uid).findOne({ where: { key: item.key } });
+      if (!found) await strapi.entityService.create(uid, { data: item });
+    }
+  };
+
+  await seedDefaults('api::position.position', [
+    { key: 'top-manager', name: 'Üst Düzey Yönetici' },
+    { key: 'middle-manager', name: 'Orta Düzey Yönetici' },
+    { key: 'manager-candidate', name: 'Yönetici Adayı' },
+    { key: 'expert', name: 'Uzman' },
+    { key: 'beginner', name: 'Yeni Başlayan' },
+    { key: 'freelancer', name: 'Serbest / Freelancer' },
+    { key: 'worker', name: 'İşçi ve Mavi Yaka' },
+    { key: 'intern', name: 'Stajyer' },
+    { key: 'assistant-expert', name: 'Uzman Yardımcısı' },
+    { key: 'employee', name: 'Eleman' },
+    { key: 'service-personnel', name: 'Hizmet Personeli' },
+  ]);
+
+  await seedDefaults('api::department.department', [
+    { key: 'hr', name: 'İnsan Kaynakları' },
+    { key: 'sales', name: 'Satış' },
+    { key: 'it', name: 'Bilgi Teknolojileri' },
+    { key: 'finance', name: 'Finans' },
+    { key: 'production', name: 'Üretim' },
+    { key: 'marketing', name: 'Pazarlama' },
+  ]);
+
+  await seedDefaults('api::sector.sector', [
+    { key: 'technology', name: 'Teknoloji' },
+    { key: 'healthcare', name: 'Sağlık' },
+    { key: 'education', name: 'Eğitim' },
+    { key: 'construction', name: 'İnşaat' },
+    { key: 'finance', name: 'Finans' },
+  ]);
+}
+
 // duyuru content-type'a slug alanı sonradan eklendi; eski kayıtların slug'ı
 // olmadığı için title'dan otomatik üretip doldurur (ilk açılışta bir kere).
 async function backfillDuyuruSlugs({ strapi }) {
@@ -741,6 +886,7 @@ module.exports = {
 
   async bootstrap({ strapi }) {
     await setPublicPermissions({ strapi });
+    await setupIkModules({ strapi });
     await backfillDuyuruSlugs({ strapi });
     await ensureServerApiToken({ strapi });
     await deduplicateSSSData({ strapi });
