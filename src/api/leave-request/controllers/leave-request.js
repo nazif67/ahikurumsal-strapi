@@ -6,6 +6,9 @@
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
+// user ilişkileri (reviewedBy vb.) ham dönerse şifre hash'i sızar — daraltılmış select
+const USER_SAFE_SELECT = ['id', 'documentId', 'username', 'email'];
+
 module.exports = createCoreController('api::leave-request.leave-request', ({ strapi }) => ({
   /**
    * Override find method to filter by company
@@ -31,9 +34,12 @@ module.exports = createCoreController('api::leave-request.leave-request', ({ str
       // Get leave requests for this company only
       const leaveRequests = await strapi.db.query('api::leave-request.leave-request').findMany({
         where: { company: companyProfile.id },
-        populate: ['worker', 'worker.photo', 'worker.department', 'reviewedBy'],
+        populate: {
+          worker: { populate: { photo: true, department: true } },
+          reviewedBy: { select: USER_SAFE_SELECT }
+        },
         orderBy: { createdAt: 'desc' },
-        limit: ctx.query.pagination?.pageSize || 100
+        limit: Math.min(parseInt(ctx.query.pagination?.pageSize) || 100, 500)
       });
 
       return ctx.send({
@@ -250,6 +256,91 @@ module.exports = createCoreController('api::leave-request.leave-request', ({ str
   },
 
   /**
+   * Override findOne — core handler şirket kontrolü yapmıyordu;
+   * başka şirketin izin talebi okunabiliyordu
+   */
+  async findOne(ctx) {
+    try {
+      const { id } = ctx.params;
+      const user = ctx.state.user;
+
+      if (!user) {
+        return ctx.unauthorized('Giriş yapmalısınız');
+      }
+
+      const companyProfile = await strapi.db.query('api::company-profile.company-profile').findOne({
+        where: { owner: user.id }
+      });
+
+      if (!companyProfile) {
+        return ctx.forbidden('Şirket profili bulunamadı');
+      }
+
+      const leaveRequest = await strapi.db.query('api::leave-request.leave-request').findOne({
+        where: { documentId: id, company: companyProfile.id },
+        populate: {
+          worker: { populate: { photo: true, department: true } },
+          reviewedBy: { select: USER_SAFE_SELECT }
+        }
+      });
+
+      if (!leaveRequest) {
+        return ctx.notFound('İzin talebi bulunamadı');
+      }
+
+      return ctx.send({ data: leaveRequest });
+    } catch (error) {
+      console.error('Find one leave request error:', error);
+      return ctx.internalServerError('İzin talebi yüklenirken bir hata oluştu');
+    }
+  },
+
+  /**
+   * Override update — core handler şirket kontrolü yapmıyordu;
+   * başka şirketin izin talebi güncellenebiliyordu
+   */
+  async update(ctx) {
+    try {
+      const { id } = ctx.params;
+      const { data } = ctx.request.body;
+      const user = ctx.state.user;
+
+      if (!user) {
+        return ctx.unauthorized('Giriş yapmalısınız');
+      }
+
+      const companyProfile = await strapi.db.query('api::company-profile.company-profile').findOne({
+        where: { owner: user.id }
+      });
+
+      if (!companyProfile) {
+        return ctx.forbidden('Şirket profili bulunamadı');
+      }
+
+      const existing = await strapi.db.query('api::leave-request.leave-request').findOne({
+        where: { documentId: id, company: companyProfile.id }
+      });
+
+      if (!existing) {
+        return ctx.notFound('İzin talebi bulunamadı veya erişim yetkiniz yok');
+      }
+
+      // İlişkiler istemciden değiştirilemesin
+      const { worker, company, ...safeData } = data || {};
+
+      const updated = await strapi.db.query('api::leave-request.leave-request').update({
+        where: { id: existing.id },
+        data: safeData
+      });
+
+      return ctx.send({ data: updated });
+    } catch (error) {
+      console.error('Update leave request error:', error);
+      return ctx.internalServerError('İzin talebi güncellenirken bir hata oluştu');
+    }
+  },
+
+  /**
    * Get my leave requests (for logged-in worker)
    * GET /api/leave-requests/my-requests
    */
@@ -274,7 +365,7 @@ module.exports = createCoreController('api::leave-request.leave-request', ({ str
       // Get all leave requests for this worker
       const leaveRequests = await strapi.db.query('api::leave-request.leave-request').findMany({
         where: { worker: worker.id },
-        populate: ['worker', 'reviewedBy'],
+        populate: { worker: true, reviewedBy: { select: USER_SAFE_SELECT } },
         orderBy: { createdAt: 'desc' }
       });
 
@@ -438,9 +529,17 @@ module.exports = createCoreController('api::leave-request.leave-request', ({ str
         return ctx.unauthorized('Giriş yapmalısınız');
       }
 
+      // Sadece kendi şirketinin çalışanı sorgulanabilir
+      const companyProfile = await strapi.db.query('api::company-profile.company-profile').findOne({
+        where: { owner: user.id }
+      });
+
+      if (!companyProfile) {
+        return ctx.forbidden('Şirket profili bulunamadı');
+      }
+
       const worker = await strapi.db.query('api::worker.worker').findOne({
-        where: { documentId: workerId },
-        populate: ['user']
+        where: { documentId: workerId, company: companyProfile.id }
       });
 
       if (!worker) {

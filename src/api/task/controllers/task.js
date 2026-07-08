@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 /**
  * task controller
@@ -16,7 +16,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       const user = ctx.state.user;
 
       if (!user) {
-        return ctx.unauthorized('Giriş yapmalısınız');
+        return ctx.unauthorized('GiriÅŸ yapmalÄ±sÄ±nÄ±z');
       }
 
       // Get user's company profile
@@ -42,7 +42,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
           assignedTo: {
             populate: ['photo', 'department']
           },
-          assignedBy: true,
+          assignedBy: { select: ['id', 'documentId', 'username', 'email'] },
           company: true
         },
         orderBy: { dueDate: 'asc' },
@@ -71,7 +71,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       console.log('Creating task, user:', user?.id);
 
       if (!user) {
-        return ctx.unauthorized('Giriş yapmalısınız');
+        return ctx.unauthorized('GiriÅŸ yapmalÄ±sÄ±nÄ±z');
       }
 
       // Get user's company profile
@@ -82,7 +82,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
 
       if (!companyProfiles || companyProfiles.length === 0) {
         console.error('Company profile not found for user:', user.id);
-        return ctx.forbidden('Şirket profili bulunamadı');
+        return ctx.forbidden('Åirket profili bulunamadÄ±');
       }
 
       const companyProfile = companyProfiles[0];
@@ -103,7 +103,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
           
           if (!worker) {
             console.error('Worker not found with documentId:', assignedToId);
-            return ctx.badRequest('Atanan çalışan bulunamadı');
+            return ctx.badRequest('Atanan Ã§alÄ±ÅŸan bulunamadÄ±');
           }
           
           assignedToId = worker.id;
@@ -133,7 +133,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
           assignedTo: {
             populate: ['photo', 'department']
           },
-          assignedBy: true,
+          assignedBy: { select: ['id', 'documentId', 'username', 'email'] },
           company: true
         }
       });
@@ -147,7 +147,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       console.error('Create task error:', error);
       console.error('Error message:', error.message);
       console.error('Error stack:', error.stack);
-      return ctx.badRequest(`Görev oluşturulurken bir hata oluştu: ${error.message}`);
+      return ctx.badRequest(`GÃ¶rev oluÅŸturulurken bir hata oluÅŸtu: ${error.message}`);
     }
   },
 
@@ -161,7 +161,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       const user = ctx.state.user;
 
       if (!user) {
-        return ctx.unauthorized('Giriş yapmalısınız');
+        return ctx.unauthorized('GiriÅŸ yapmalÄ±sÄ±nÄ±z');
       }
 
       // Get user's company profile
@@ -171,7 +171,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       });
 
       if (!companyProfiles || companyProfiles.length === 0) {
-        return ctx.forbidden('Şirket profili bulunamadı');
+        return ctx.forbidden('Åirket profili bulunamadÄ±');
       }
 
       const companyProfile = companyProfiles[0];
@@ -183,11 +183,11 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       });
 
       if (!task) {
-        return ctx.notFound('Görev bulunamadı');
+        return ctx.notFound('GÃ¶rev bulunamadÄ±');
       }
 
       if (!task.company || task.company.id !== companyProfile.id) {
-        return ctx.forbidden('Bu görevi güncelleyemezsiniz');
+        return ctx.forbidden('Bu gÃ¶revi gÃ¼ncelleyemezsiniz');
       }
 
       const updateData = ctx.request.body.data || ctx.request.body;
@@ -199,7 +199,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
           assignedTo: {
             populate: ['photo', 'department']
           },
-          assignedBy: true,
+          assignedBy: { select: ['id', 'documentId', 'username', 'email'] },
           company: true
         }
       });
@@ -210,7 +210,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
     } catch (error) {
       console.error('Update task error:', error);
       console.error('Error stack:', error.stack);
-      return ctx.badRequest(`Görev güncellenirken bir hata oluştu: ${error.message}`);
+      return ctx.badRequest(`GÃ¶rev gÃ¼ncellenirken bir hata oluÅŸtu: ${error.message}`);
     }
   },
 
@@ -224,7 +224,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       const user = ctx.state.user;
 
       if (!user) {
-        return ctx.unauthorized('Giriş yapmalısınız');
+        return ctx.unauthorized('GiriÅŸ yapmalÄ±sÄ±nÄ±z');
       }
 
       // Get user's company profile
@@ -234,7 +234,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       });
 
       if (!companyProfiles || companyProfiles.length === 0) {
-        return ctx.forbidden('Şirket profili bulunamadı');
+        return ctx.forbidden('Åirket profili bulunamadÄ±');
       }
 
       const companyProfile = companyProfiles[0];
@@ -246,11 +246,11 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       });
 
       if (!task) {
-        return ctx.notFound('Görev bulunamadı');
+        return ctx.notFound('GÃ¶rev bulunamadÄ±');
       }
 
       if (!task.company || task.company.id !== companyProfile.id) {
-        return ctx.forbidden('Bu görevi silemezsiniz');
+        return ctx.forbidden('Bu gÃ¶revi silemezsiniz');
       }
 
       await strapi.db.query('api::task.task').delete({
@@ -263,7 +263,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
     } catch (error) {
       console.error('Delete task error:', error);
       console.error('Error stack:', error.stack);
-      return ctx.badRequest(`Görev silinirken bir hata oluştu: ${error.message}`);
+      return ctx.badRequest(`GÃ¶rev silinirken bir hata oluÅŸtu: ${error.message}`);
     }
   },
 
@@ -278,7 +278,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       const user = ctx.state.user;
 
       if (!user) {
-        return ctx.unauthorized('Giriş yapmalısınız');
+        return ctx.unauthorized('GiriÅŸ yapmalÄ±sÄ±nÄ±z');
       }
 
       const task = await strapi.db.query('api::task.task').findOne({
@@ -292,18 +292,18 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       });
 
       if (!task) {
-        return ctx.notFound('Görev bulunamadı');
+        return ctx.notFound('GÃ¶rev bulunamadÄ±');
       }
 
       // Check if user is the assigned worker
       if (!task.assignedTo || !task.assignedTo.user || task.assignedTo.user.id !== user.id) {
-        return ctx.forbidden('Bu görevi güncelleyemezsiniz');
+        return ctx.forbidden('Bu gÃ¶revi gÃ¼ncelleyemezsiniz');
       }
 
       // Additional security: Check if worker's company matches task's company
       if (task.company && task.assignedTo.company) {
         if (task.company.id !== task.assignedTo.company.id) {
-          return ctx.forbidden('Bu göreve erişim yetkiniz yok');
+          return ctx.forbidden('Bu gÃ¶reve eriÅŸim yetkiniz yok');
         }
       }
 
@@ -322,7 +322,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       const dueDate = new Date(task.dueDate);
       if (dueDate < now && status !== 'completed' && status !== 'not_completed') {
         updateData.status = 'not_completed';
-        updateData.statusNote = 'Teslim tarihi geçti';
+        updateData.statusNote = 'Teslim tarihi geÃ§ti';
       }
 
       const updatedTask = await strapi.db.query('api::task.task').update({
@@ -336,7 +336,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
     } catch (error) {
       console.error('Update task status error:', error);
       console.error('Error stack:', error.stack);
-      return ctx.badRequest(`Görev durumu güncellenirken bir hata oluştu: ${error.message}`);
+      return ctx.badRequest(`GÃ¶rev durumu gÃ¼ncellenirken bir hata oluÅŸtu: ${error.message}`);
     }
   },
 
@@ -349,7 +349,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       const user = ctx.state.user;
 
       if (!user) {
-        return ctx.unauthorized('Giriş yapmalısınız');
+        return ctx.unauthorized('GiriÅŸ yapmalÄ±sÄ±nÄ±z');
       }
 
       // Find worker by user
@@ -376,7 +376,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       const tasks = await strapi.db.query('api::task.task').findMany({
         where: whereCondition,
         populate: {
-          assignedBy: true,
+          assignedBy: { select: ['id', 'documentId', 'username', 'email'] },
           company: true
         },
         orderBy: { dueDate: 'asc' }
@@ -391,7 +391,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
             where: { id: task.id },
             data: {
               status: 'not_completed',
-              statusNote: 'Teslim tarihi geçti'
+              statusNote: 'Teslim tarihi geÃ§ti'
             }
           });
         }
@@ -401,7 +401,7 @@ module.exports = createCoreController('api::task.task', ({ strapi }) => ({
       const updatedTasks = await strapi.db.query('api::task.task').findMany({
         where: whereCondition,
         populate: {
-          assignedBy: true,
+          assignedBy: { select: ['id', 'documentId', 'username', 'email'] },
           company: true
         },
         orderBy: { dueDate: 'asc' }

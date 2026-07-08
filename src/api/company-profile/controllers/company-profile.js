@@ -5,6 +5,9 @@
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
+// owner (users-permissions user) ham populate edilirse şifre hash'i sızar
+const OWNER_SAFE_SELECT = ['id', 'documentId', 'username', 'email', 'blocked', 'confirmed'];
+
 module.exports = createCoreController(
   "api::company-profile.company-profile",
   ({ strapi }) => ({
@@ -68,9 +71,9 @@ module.exports = createCoreController(
           .query("api::company-profile.company-profile")
           .findMany({
             where: { owner: user.id },
-            populate: ["logo", "owner", "sector"],
+            populate: { logo: true, sector: true, owner: { select: OWNER_SAFE_SELECT } },
           })
-  
+
         ctx.body = { data: entries }
       }
     },
@@ -79,11 +82,16 @@ module.exports = createCoreController(
       const { user } = ctx.state;
       const { id } = ctx.params;
 
+      // user yokken user.id okunup 500 dönüyordu
+      if (!user) {
+        return ctx.unauthorized("Giriş yapmalısınız");
+      }
+
       const company = await strapi.db
         .query("api::company-profile.company-profile")
         .findOne({
           where: { id: +id },
-          populate: ["owner", "logo", "sector"],
+          populate: { logo: true, sector: true, owner: { select: OWNER_SAFE_SELECT } },
         });
 
       if (!company) return ctx.notFound("Şirket bulunamadı");
@@ -166,11 +174,18 @@ module.exports = createCoreController(
         return ctx.unauthorized("Bu şirketi güncelleme yetkiniz yok");
       }
 
+      // Şirket kullanıcısı profili başka kullanıcıya devredemez / donduramaz
+      const updateData = { ...ctx.request.body.data };
+      if (user.role.name !== "Employee") {
+        delete updateData.owner;
+        delete updateData.isFrozen;
+      }
+
       const updated = await strapi.db
         .query("api::company-profile.company-profile")
         .update({
           where: { id: +id },
-          data: ctx.request.body.data,
+          data: updateData,
         });
 
       ctx.body = { data: updated };

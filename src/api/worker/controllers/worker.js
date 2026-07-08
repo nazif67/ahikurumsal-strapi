@@ -7,6 +7,13 @@
 const { createCoreController } = require('@strapi/strapi').factories;
 const crypto = require('crypto');
 
+// db.query populate'i users-permissions user kaydını ham döndürür (password hash,
+// resetPasswordToken dahil) — user ilişkisi her zaman bu select ile daraltılmalı
+const USER_SAFE_SELECT = ['id', 'documentId', 'username', 'email', 'confirmed', 'blocked'];
+
+// employee (işveren/yönetici) ve admin rolleri şirketler-üstü çalışabilir
+const isPrivileged = (user) => ['employee', 'admin'].includes(user?.role?.type);
+
 module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
   /**
    * Override find method to filter by company OR return own profile if worker
@@ -40,7 +47,7 @@ module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
               branch: true,
               position: true,
               company: true,
-              user: true,
+              user: { select: USER_SAFE_SELECT },
               criminalRecordDoc: true,
               populationRegistryDoc: true,
               identityDoc: true,
@@ -95,10 +102,10 @@ module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
           branch: true,
           position: true,
           company: true,
-          user: true
+          user: { select: USER_SAFE_SELECT }
         },
         orderBy: { createdAt: 'desc' },
-        limit: ctx.query.pagination?.pageSize || 100
+        limit: Math.min(parseInt(ctx.query.pagination?.pageSize) || 100, 500)
       });
 
       console.log('Found workers:', workers.length);
@@ -128,10 +135,11 @@ module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
       // Parse populate parameter from query
       const populateFields = ctx.query.populate || ['photo', 'department', 'branch', 'position', 'company', 'user'];
       const populateObj = {};
-      
+
       if (Array.isArray(populateFields)) {
         populateFields.forEach(field => {
-          populateObj[field] = true;
+          // user ilişkisi ham dönerse şifre hash'i sızar — her zaman daralt
+          populateObj[field] = field === 'user' ? { select: USER_SAFE_SELECT } : true;
         });
       }
 
@@ -195,7 +203,26 @@ module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
   async create(ctx) {
     try {
       const { data } = ctx.request.body;
-      
+      const currentUser = ctx.state.user;
+
+      if (!currentUser) {
+        return ctx.unauthorized('Oturum açmanız gerekiyor');
+      }
+
+      // Şirket kullanıcıları sadece KENDİ şirketine çalışan ekleyebilir;
+      // company alanı istemciden değil, çağıranın profilinden alınır
+      let companyId = data.company;
+      if (!isPrivileged(currentUser)) {
+        const ownProfile = await strapi.db.query('api::company-profile.company-profile').findOne({
+          where: { owner: currentUser.id }
+        });
+
+        if (!ownProfile) {
+          return ctx.forbidden('Şirket profili bulunamadı');
+        }
+        companyId = ownProfile.id;
+      }
+
       let userId = null;
 
       // Kullanıcı hesabı oluşturulacaksa
@@ -255,14 +282,17 @@ module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
         isForeigner: data.isForeigner,
         salary: data.salary,
         isActive: data.isActive !== undefined ? data.isActive : true,
-        company: data.company,
+        company: companyId,
         photo: data.photo,
         user: userId // User hesabı oluşturulduysa bağla
       };
 
       const entity = await strapi.entityService.create('api::worker.worker', {
         data: workerData,
-        populate: ['department', 'branch', 'position', 'company', 'user', 'photo']
+        populate: {
+          department: true, branch: true, position: true, company: true, photo: true,
+          user: { fields: USER_SAFE_SELECT }
+        }
       });
 
       return this.transformResponse(entity);
@@ -279,15 +309,35 @@ module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
     try {
       const { id } = ctx.params;
       const { data } = ctx.request.body;
+      const currentUser = ctx.state.user;
+
+      if (!currentUser) {
+        return ctx.unauthorized('Oturum açmanız gerekiyor');
+      }
 
       // Get existing worker
       const worker = await strapi.db.query('api::worker.worker').findOne({
         where: { documentId: id },
-        populate: ['user']
+        populate: { user: { select: USER_SAFE_SELECT }, company: true }
       });
 
       if (!worker) {
         return ctx.notFound('Worker not found');
+      }
+
+      // Şirket kullanıcıları sadece kendi şirketinin çalışanını güncelleyebilir
+      // (şifre değiştirme dahil — aksi halde başka şirketin çalışan hesabı ele geçirilebilir)
+      if (!isPrivileged(currentUser)) {
+        const ownProfile = await strapi.db.query('api::company-profile.company-profile').findOne({
+          where: { owner: currentUser.id }
+        });
+
+        if (!ownProfile || !worker.company || worker.company.id !== ownProfile.id) {
+          return ctx.forbidden('Bu çalışanı güncelleme yetkiniz yok');
+        }
+
+        // Şirket kullanıcısı çalışanı başka şirkete taşıyamaz
+        delete data.company;
       }
 
       // Şifre değiştirilecek mi?
@@ -313,13 +363,59 @@ module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
       // Update worker
       const entity = await strapi.entityService.update('api::worker.worker', worker.id, {
         data: workerData,
-        populate: ['department', 'branch', 'position', 'company', 'user', 'photo']
+        populate: {
+          department: true, branch: true, position: true, company: true, photo: true,
+          user: { fields: USER_SAFE_SELECT }
+        }
       });
 
       return this.transformResponse(entity);
     } catch (error) {
       console.error('Error in worker update:', error);
       return ctx.badRequest(error.message || 'Worker update failed');
+    }
+  },
+
+  /**
+   * Override delete - core handler şirket kontrolü yapmadığı için
+   * bir şirket başka şirketin çalışanını silebiliyordu
+   */
+  async delete(ctx) {
+    try {
+      const { id } = ctx.params;
+      const currentUser = ctx.state.user;
+
+      if (!currentUser) {
+        return ctx.unauthorized('Oturum açmanız gerekiyor');
+      }
+
+      const worker = await strapi.db.query('api::worker.worker').findOne({
+        where: { documentId: id },
+        populate: ['company']
+      });
+
+      if (!worker) {
+        return ctx.notFound('Çalışan bulunamadı');
+      }
+
+      if (!isPrivileged(currentUser)) {
+        const ownProfile = await strapi.db.query('api::company-profile.company-profile').findOne({
+          where: { owner: currentUser.id }
+        });
+
+        if (!ownProfile || !worker.company || worker.company.id !== ownProfile.id) {
+          return ctx.forbidden('Bu çalışanı silme yetkiniz yok');
+        }
+      }
+
+      await strapi.db.query('api::worker.worker').delete({
+        where: { id: worker.id }
+      });
+
+      return ctx.send({ data: { id: worker.documentId }, success: true });
+    } catch (error) {
+      console.error('Error in worker delete:', error);
+      return ctx.internalServerError('Çalışan silinirken bir hata oluştu');
     }
   },
 
@@ -342,8 +438,17 @@ module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
       }
 
       // Check if user has permission (only company owner can generate tokens)
+      // Kontrol atlanabilir OLMAMALI: şirketsiz çalışan için de yetki aranır
       const user = ctx.state.user;
-      if (user && worker.company && worker.company.id) {
+      if (!user) {
+        return ctx.unauthorized('Oturum açmanız gerekiyor');
+      }
+
+      if (!isPrivileged(user)) {
+        if (!worker.company || !worker.company.id) {
+          return ctx.forbidden('Bu çalışan için token oluşturamazsınız');
+        }
+
         const companyProfile = await strapi.db.query('api::company-profile.company-profile').findOne({
           where: { id: worker.company.id },
           populate: ['owner']
@@ -650,6 +755,10 @@ module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
       }
 
       // Check if user has permission
+      if (!worker.company || !worker.company.id) {
+        return ctx.forbidden('Bu çalışan için tazminat hesaplayamazsınız');
+      }
+
       const companyProfile = await strapi.db.query('api::company-profile.company-profile').findOne({
         where: { id: worker.company.id },
         populate: ['owner']
@@ -836,20 +945,8 @@ module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
         return ctx.badRequest('Şirket profili bulunamadı');
       }
 
-      // Get worker
-      const worker = await strapi.db.query('api::worker.worker').findOne({
-        where: { 
-          documentId: workerId,
-          company: companyProfile.id
-        },
-        populate: [documentType]
-      });
-
-      if (!worker) {
-        return ctx.notFound('Çalışan bulunamadı veya bu çalışana erişim yetkiniz yok');
-      }
-
-      // Valid document types
+      // Valid document types — istemciden gelen alan adı populate'te
+      // kullanılmadan ÖNCE doğrulanmalı
       const validDocTypes = [
         'criminalRecordDoc',
         'populationRegistryDoc',
@@ -861,6 +958,19 @@ module.exports = createCoreController('api::worker.worker', ({ strapi }) => ({
 
       if (!validDocTypes.includes(documentType)) {
         return ctx.badRequest('Geçersiz evrak tipi');
+      }
+
+      // Get worker
+      const worker = await strapi.db.query('api::worker.worker').findOne({
+        where: {
+          documentId: workerId,
+          company: companyProfile.id
+        },
+        populate: [documentType]
+      });
+
+      if (!worker) {
+        return ctx.notFound('Çalışan bulunamadı veya bu çalışana erişim yetkiniz yok');
       }
 
       // Check if document exists

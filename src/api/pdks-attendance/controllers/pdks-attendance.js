@@ -67,7 +67,7 @@ module.exports = createCoreController('api::pdks-attendance.pdks-attendance', ({
       }
 
       // Check if worker belongs to the same company
-      if (worker.company.id !== session.company.id) {
+      if (!worker.company || !session.company || worker.company.id !== session.company.id) {
         return ctx.forbidden('Bu QR kod şirketinize ait değil');
       }
 
