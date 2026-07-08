@@ -811,17 +811,7 @@ export interface ApiHaberHaber extends Struct.CollectionTypeSchema {
   };
   attributes: {
     author: Schema.Attribute.String;
-    category: Schema.Attribute.Enumeration<
-      [
-        'Genel',
-        '\u0130\u015F Hukuku',
-        'Mevzuat',
-        'SGK & Sigorta',
-        '\u00DCcret & Tazminat',
-        '\u0130\u015Fe Al\u0131m',
-      ]
-    > &
-      Schema.Attribute.DefaultTo<'Genel'>;
+    category: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Genel'>;
     content: Schema.Attribute.RichText;
     coverImage: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;

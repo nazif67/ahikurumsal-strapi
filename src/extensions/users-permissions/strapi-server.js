@@ -58,6 +58,7 @@ module.exports = (plugin) => {
             ],
           },
           select: ['id', 'username', 'email', 'password', 'confirmed', 'blocked', 'ahiIkMember', 'institutionManagementMember'], // ahiIkMember ve institutionManagementMember eklendi
+          populate: { role: true }, // panel yönlendirmesi role.type'a bağlı (admin/employee/worker)
         });
 
         if (!user || !user.password) {
@@ -89,6 +90,7 @@ module.exports = (plugin) => {
             blocked: user.blocked, // Login engelleme için
             ahiIkMember: user.ahiIkMember || false, // AHİ-İK menüsü için
             institutionManagementMember: user.institutionManagementMember || false, // Kurum Yönetimi menüsü için
+            role: user.role ? { id: user.role.id, name: user.role.name, type: user.role.type } : null, // admin/şirket ayrımı için
           },
         });
       }
@@ -106,6 +108,7 @@ module.exports = (plugin) => {
           blocked: user.blocked, // Login engelleme için
           ahiIkMember: user.ahiIkMember || false, // AHİ-İK menüsü için
           institutionManagementMember: user.institutionManagementMember || false, // Kurum Yönetimi menüsü için
+          role: user.role ? { id: user.role.id, name: user.role.name, type: user.role.type } : null, // admin/şirket ayrımı için
         },
       });
     },

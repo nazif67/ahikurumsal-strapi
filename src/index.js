@@ -113,7 +113,7 @@ async function setupIkModules({ strapi }) {
     return role;
   };
 
-  // 1) İşveren (employee) ve çalışan (worker) rolleri
+  // 1) İşveren (employee), çalışan (worker) ve platform yöneticisi (admin) rolleri
   const employeeRole = await ensureRole({
     name: 'Employee',
     description: 'Admin/Yönetici kullanıcı rolü',
@@ -123,6 +123,11 @@ async function setupIkModules({ strapi }) {
     name: 'Worker',
     description: 'Çalışan (PDKS) rolü',
     type: 'worker',
+  });
+  const adminRole = await ensureRole({
+    name: 'Admin',
+    description: 'Platform yöneticisi — şirket ve kurum yönetimi',
+    type: 'admin',
   });
 
   // 2) config-sync rol dosyalarından izinler (İK ile sınırlı)
@@ -165,6 +170,25 @@ async function setupIkModules({ strapi }) {
     'api::leave-request.leave-request.getMyRemainingDays', // kalan izin
     'api::task.task.getMyTasks', // görevlerim
     'api::task.task.updateStatus', // görev durumunu güncelle
+  ]);
+
+  // Admin (platform yöneticisi) rolü — Employee izin setinin tamamı artı
+  // şirketlere yetki verme (kullanıcı güncelleme employee setinde mevcut),
+  // demo talepleri, iletişim formları ve kurum yönetimi.
+  await grant(adminRole.id, loadActions('user-role.employee.json'));
+  await grant(adminRole.id, [
+    'api::demo-request.demo-request.find',
+    'api::demo-request.demo-request.findOne',
+    'api::demo-request.demo-request.update',
+    'api::demo-request.demo-request.delete',
+    'api::contact-form.contact-form.find',
+    'api::contact-form.contact-form.findOne',
+    'api::contact-form.contact-form.delete',
+    'api::institution.institution.find',
+    'api::institution.institution.findOne',
+    'api::institution.institution.create',
+    'api::institution.institution.update',
+    'api::institution.institution.delete',
   ]);
 
   // 3) Varsayılan pozisyon / departman / sektör
