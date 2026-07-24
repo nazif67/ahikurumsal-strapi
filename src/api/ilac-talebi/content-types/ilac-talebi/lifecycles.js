@@ -30,12 +30,14 @@ async function sendTelegramToDoctor(text) {
 
 module.exports = {
   async afterCreate(event) {
-    const { adSoyad, ilaclar } = event.result;
+    const { adSoyad, ilaclar, mgBilgisi, hekimRaporu } = event.result;
 
     const text =
       `💊 <b>Yeni İlaç Talebi</b>\n\n` +
       `Ad Soyad: ${adSoyad}\n` +
-      `İlaçlar: ${ilaclar}`;
+      `İlaçlar: ${ilaclar}\n` +
+      `Mg Bilgisi: ${mgBilgisi}\n` +
+      `Uzman Hekim Raporu: ${hekimRaporu === 'var' ? 'Var' : 'Yok'}`;
 
     await sendTelegramToDoctor(text);
   },

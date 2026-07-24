@@ -6,3 +6,5 @@ build/
 .env
 *.log
 exports/
+.strapi-updater.json
+.strapi/

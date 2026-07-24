@@ -19,6 +19,15 @@
     "ilaclar": {
       "type": "text",
       "required": true
+    },
+    "mgBilgisi": {
+      "type": "text",
+      "required": true
+    },
+    "hekimRaporu": {
+      "type": "enumeration",
+      "enum": ["var", "yok"],
+      "required": true
     }
   }
 }
