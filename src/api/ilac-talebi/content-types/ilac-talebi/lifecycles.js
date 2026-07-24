@@ -30,13 +30,19 @@ async function sendTelegramToDoctor(text) {
 
 module.exports = {
   async afterCreate(event) {
-    const { adSoyad, ilaclar, mgBilgisi, hekimRaporu } = event.result;
+    const entry = await strapi.entityService.findOne('api::ilac-talebi.ilac-talebi', event.result.id, {
+      populate: ['ilaclar'],
+    });
+    const { adSoyad, ilaclar, hekimRaporu } = entry;
+
+    const ilacListesi = (ilaclar || [])
+      .map((item) => `- ${item.ilacAdi} (${item.mg})`)
+      .join('\n');
 
     const text =
       `💊 <b>Yeni İlaç Talebi</b>\n\n` +
       `Ad Soyad: ${adSoyad}\n` +
-      `İlaçlar: ${ilaclar}\n` +
-      `Mg Bilgisi: ${mgBilgisi}\n` +
+      `İlaçlar:\n${ilacListesi}\n` +
       `Uzman Hekim Raporu: ${hekimRaporu === 'var' ? 'Var' : 'Yok'}`;
 
     await sendTelegramToDoctor(text);

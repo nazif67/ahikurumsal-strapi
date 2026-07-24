@@ -17,11 +17,9 @@
       "required": true
     },
     "ilaclar": {
-      "type": "text",
-      "required": true
-    },
-    "mgBilgisi": {
-      "type": "text",
+      "type": "component",
+      "component": "ilac-talebi.ilac-satiri",
+      "repeatable": true,
       "required": true
     },
     "hekimRaporu": {

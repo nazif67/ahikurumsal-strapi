@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_ilac_talebi_ilac_satirlari",
+  "info": {
+    "displayName": "İlaç Satırı"
+  },
+  "options": {},
+  "attributes": {
+    "ilacAdi": {
+      "type": "string",
+      "required": true
+    },
+    "mg": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
