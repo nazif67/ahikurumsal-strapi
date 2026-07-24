@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ilac_talepleri",
+  "info": {
+    "singularName": "ilac-talebi",
+    "pluralName": "ilac-talepleri",
+    "displayName": "İlaç Talebi",
+    "description": "Çalışanların ad-soyad ve ilaç isimlerini girdiği, doktora Telegram ile bildirilen form"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "adSoyad": {
+      "type": "string",
+      "required": true
+    },
+    "ilaclar": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

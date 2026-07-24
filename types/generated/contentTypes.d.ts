@@ -877,6 +877,36 @@ export interface ApiHakkimdaHakkimda extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiIlacTalebiIlacTalebi extends Struct.CollectionTypeSchema {
+  collectionName: 'ilac_talepleri';
+  info: {
+    description: '\u00C7al\u0131\u015Fanlar\u0131n ad-soyad ve ila\u00E7 isimlerini girdi\u011Fi, doktora Telegram ile bildirilen form';
+    displayName: '\u0130la\u00E7 Talebi';
+    pluralName: 'ilac-talepleri';
+    singularName: 'ilac-talebi';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    adSoyad: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ilaclar: Schema.Attribute.Text & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ilac-talebi.ilac-talebi'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiIletisimMesajlariIletisimMesajlari
   extends Struct.CollectionTypeSchema {
   collectionName: 'iletisim_mesajlaris';
@@ -2275,6 +2305,7 @@ declare module '@strapi/strapi' {
       'api::duyuru.duyuru': ApiDuyuruDuyuru;
       'api::haber.haber': ApiHaberHaber;
       'api::hakkimda.hakkimda': ApiHakkimdaHakkimda;
+      'api::ilac-talebi.ilac-talebi': ApiIlacTalebiIlacTalebi;
       'api::iletisim-mesajlari.iletisim-mesajlari': ApiIletisimMesajlariIletisimMesajlari;
       'api::incoming-document.incoming-document': ApiIncomingDocumentIncomingDocument;
       'api::institution.institution': ApiInstitutionInstitution;
